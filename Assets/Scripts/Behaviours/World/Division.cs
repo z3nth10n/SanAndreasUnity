@@ -36,7 +36,7 @@ namespace SanAndreasUnity.Behaviours.World
         private bool _isVertSplit;
         private float _splitVal;
 
-        private Vector3 _lastRefreshPos;
+        private Vector3 _lastRefreshPos = new Vector3(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity);
 
         public Vector2 Min { get; private set; }
         public Vector2 Max { get; private set; }
