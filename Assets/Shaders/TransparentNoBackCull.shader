@@ -28,7 +28,7 @@
         #pragma surface surf Standard alpha:fade noshadow
         #pragma target 3.0
         
-        #define FADE
+        //#define FADE
 
         #include "Shared.cginc"
 

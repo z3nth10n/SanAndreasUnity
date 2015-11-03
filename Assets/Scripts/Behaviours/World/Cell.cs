@@ -26,34 +26,42 @@ namespace SanAndreasUnity.Behaviours.World
 
         void Update()
         {
-            if (RootDivision == null && Loader.HasLoaded) {
+            if (RootDivision == null && Loader.HasLoaded)
+            {
                 RootDivision = Division.Create(transform);
                 RootDivision.SetBounds(
                     new Vector2(-3000f, -3000f),
                     new Vector2(+3000f, +3000f));
 
-                using (Utilities.Profiler.Start("Cell partitioning time")) {
+                using (Utilities.Profiler.Start("Cell partitioning time"))
+                {
                     var insts = Item.GetPlacements<Instance>(CellIds.ToArray())
                         .ToDictionary(x => x, x => StaticGeometry.Create());
 
-                    foreach (var inst in insts) {
+                    foreach (var inst in insts)
+                    {
                         inst.Value.Initialize(inst.Key, insts);
                     }
 
-                    if (NetConfig.IsServer) {
+                    if (NetConfig.IsServer)
+                    {
                         var cars = Item.GetPlacements<ParkedVehicle>(CellIds.ToArray())
                             .Select(x => VehicleSpawner.Create(x))
                             .Cast<MapObject>()
                             .ToArray();
 
                         RootDivision.AddRange(insts.Values.Cast<MapObject>().Concat(cars));
-                    } else {
+                    }
+                    else
+                    {
                         RootDivision.AddRange(insts.Values.Cast<MapObject>());
                     }
                 }
 
-                if (Water != null) {
-                    using (Utilities.Profiler.Start("Water load time")) {
+                if (Water != null)
+                {
+                    using (Utilities.Profiler.Start("Water load time"))
+                    {
                         Water.Initialize(new WaterFile(Config.GetPath("water_path")));
                     }
                 }
@@ -65,7 +73,12 @@ namespace SanAndreasUnity.Behaviours.World
             if (_leaves == null) return;
 
             var pos = Focus.position;
-            var toLoad = _leaves.Aggregate(false, (current, leaf) => current | leaf.RefreshLoadOrder(pos));
+
+            var toLoad = false;
+            for (var i = _leaves.Count - 1; i >= 0; --i)
+            {
+                if (_leaves[i].RefreshLoadOrder(pos)) toLoad = true;
+            }
 
             if (!toLoad) return;
 
@@ -74,7 +87,8 @@ namespace SanAndreasUnity.Behaviours.World
             _timer.Reset();
             _timer.Start();
 
-            foreach (var div in _leaves) {
+            foreach (var div in _leaves)
+            {
                 if (float.IsPositiveInfinity(div.LoadOrder)) break;
                 if (!div.LoadWhile(() => _timer.Elapsed.TotalSeconds < 1d / 60d)) break;
             }

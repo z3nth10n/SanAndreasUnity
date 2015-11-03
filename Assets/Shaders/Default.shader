@@ -28,7 +28,7 @@
         #pragma surface surf Standard addshadow alphatest:_AlphaCutoff
         #pragma target 3.0
 
-        #define FADE
+        //#define FADE
 
         #include "Shared.cginc"
 

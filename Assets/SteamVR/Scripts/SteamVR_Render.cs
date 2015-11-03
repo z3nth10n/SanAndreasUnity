@@ -14,6 +14,9 @@ public class SteamVR_Render : MonoBehaviour
 	public string helpText = "You may now put on your headset.";
 	public GUIStyle helpStyle;
 
+	public bool pauseGameWhenDashboardIsVisible = true;
+	public bool lockPhysicsUpdateRateToRenderFrequency = true;
+
 	public LayerMask leftMask, rightMask;
 
 	SteamVR_CameraMask cameraMask;
@@ -139,28 +142,37 @@ public class SteamVR_Render : MonoBehaviour
 			if (vr.compositor.CanRenderScene())
 			{
 				vr.compositor.SetTrackingSpace(trackingSpace);
-				vr.compositor.WaitGetPoses(poses, gamePoses);
+				SteamVR_Utils.QueueEventOnRenderThread(Unity.k_nRenderEventID_WaitGetPoses);
+
+				// Hack to flush render event that was queued in Update (this ensures WaitGetPoses has returned before we grab the new values).
+				Unity.EventWriteString("[UnityMain] GetNativeTexturePtr - Begin");
+				SteamVR_Camera.GetSceneTexture(cameras[0].GetComponent<Camera>().hdr).GetNativeTexturePtr();
+				Unity.EventWriteString("[UnityMain] GetNativeTexturePtr - End");
+
+				vr.compositor.GetLastPoses(poses, gamePoses);
 				SteamVR_Utils.Event.Send("new_poses", poses);
 			}
-
-			GL.IssuePluginEvent(20150313); // Fire off render event to perform our compositor sync
-			SteamVR_Camera.GetSceneTexture(cameras[0].GetComponent<Camera>().hdr).GetNativeTexturePtr(); // flush render event
 
 			var overlay = SteamVR_Overlay.instance;
 			if (overlay != null)
 				overlay.UpdateOverlay(vr);
 
-			RenderEye(vr, Hmd_Eye.Eye_Left, leftMask);
-			RenderEye(vr, Hmd_Eye.Eye_Right, rightMask);
+			RenderEye(vr, Hmd_Eye.Eye_Left);
+			RenderEye(vr, Hmd_Eye.Eye_Right);
+
+			// Move cameras back to head position so they can be tracked reliably
+			foreach (var c in cameras)
+			{
+				c.transform.localPosition = Vector3.zero;
+				c.transform.localRotation = Quaternion.identity;
+			}
 
 			if (cameraMask != null)
 				cameraMask.Clear();
-
-			GL.IssuePluginEvent(20150213); // Fire off render event for in-process present hook
 		}
 	}
 
-	void RenderEye(SteamVR vr, Hmd_Eye eye, LayerMask mask)
+	void RenderEye(SteamVR vr, Hmd_Eye eye)
 	{
 		int i = (int)eye;
 		SteamVR_Render.eye = eye;
@@ -179,20 +191,77 @@ public class SteamVR_Render : MonoBehaviour
 			var camera = c.GetComponent<Camera>();
 			camera.targetTexture = SteamVR_Camera.GetSceneTexture(camera.hdr);
 			int cullingMask = camera.cullingMask;
-			camera.cullingMask |= mask;
+			if (eye == Hmd_Eye.Eye_Left)
+			{
+				camera.cullingMask &= ~rightMask;
+				camera.cullingMask |= leftMask;
+			}
+			else
+			{
+				camera.cullingMask &= ~leftMask;
+				camera.cullingMask |= rightMask;
+			}
 			camera.Render();
 			camera.cullingMask = cullingMask;
 		}
 	}
 
+	float sceneResolutionScale = 1.0f, timeScale = 1.0f;
+
+	private void OnInputFocus(params object[] args)
+	{
+		bool hasFocus = (bool)args[0];
+		if (hasFocus)
+		{
+			if (pauseGameWhenDashboardIsVisible)
+			{
+				Time.timeScale = timeScale;
+			}
+	
+			SteamVR_Camera.sceneResolutionScale = sceneResolutionScale;
+		}
+		else
+		{
+			if (pauseGameWhenDashboardIsVisible)
+			{
+				timeScale = Time.timeScale;
+				Time.timeScale = 0.0f;
+			}
+
+			sceneResolutionScale = SteamVR_Camera.sceneResolutionScale;
+			SteamVR_Camera.sceneResolutionScale = 0.5f;
+		}
+	}
+
+	void OnQuit(params object[] args)
+	{
+#if UNITY_EDITOR
+		foreach (System.Reflection.Assembly a in System.AppDomain.CurrentDomain.GetAssemblies())
+		{
+			var t = a.GetType("UnityEditor.EditorApplication");
+			if (t != null)
+			{
+				t.GetProperty("isPlaying").SetValue(null, false, null);
+				break;
+			}
+		}
+#else
+		Application.Quit();
+#endif
+	}
+
 	void OnEnable()
 	{
 		StartCoroutine("RenderLoop");
+		SteamVR_Utils.Event.Listen("input_focus", OnInputFocus);
+		SteamVR_Utils.Event.Listen("Quit", OnQuit);
 	}
 
 	void OnDisable()
 	{
 		StopAllCoroutines();
+		SteamVR_Utils.Event.Remove("input_focus", OnInputFocus);
+		SteamVR_Utils.Event.Remove("Quit", OnQuit);
 	}
 
 	void Awake()
@@ -200,6 +269,12 @@ public class SteamVR_Render : MonoBehaviour
 		var go = new GameObject("cameraMask");
 		go.transform.parent = transform;
 		cameraMask = go.AddComponent<SteamVR_CameraMask>();
+	}
+
+	void FixedUpdate()
+	{
+		// We want to call this as soon after Present as possible.
+		SteamVR_Utils.QueueEventOnRenderThread(Unity.k_nRenderEventID_PostPresentHandoff);
 	}
 
 	void Update()
@@ -210,14 +285,44 @@ public class SteamVR_Render : MonoBehaviour
 			return;
 		}
 
+		// If our FixedUpdate rate doesn't match our render framerate, then catch the handoff here.
+		SteamVR_Utils.QueueEventOnRenderThread(Unity.k_nRenderEventID_PostPresentHandoff);
+
 		// Force controller update in case no one else called this frame to ensure prevState gets updated.
 		SteamVR_Controller.Update();
+
+		// Dispatch any OpenVR events.
+		var vr = SteamVR.instance;
+		var vrEvent = new VREvent_t();
+		for (int i = 0; i < 64; i++)
+		{
+			if (!vr.hmd.PollNextEvent(ref vrEvent))
+				break;
+
+			switch ((EVREventType)vrEvent.eventType)
+			{
+				case EVREventType.VREvent_InputFocusCaptured: // another app has taken focus (likely dashboard)
+					SteamVR_Utils.Event.Send("input_focus", false);
+					break;
+				case EVREventType.VREvent_InputFocusReleased: // that app has released input focus
+					SteamVR_Utils.Event.Send("input_focus", true);
+					break;
+				default:
+					var name = System.Enum.GetName(typeof(EVREventType), vrEvent.eventType);
+					if (name != null)
+						SteamVR_Utils.Event.Send(name.Substring(8) /*strip VREvent_*/, vrEvent);
+					break;
+			}
+		}
 
 		// Ensure various settings to minimize latency.
 		Application.targetFrameRate = -1;
 		Application.runInBackground = true; // don't require companion window focus
-		QualitySettings.maxQueuedFrames = 0;
+		QualitySettings.maxQueuedFrames = -1;
 		QualitySettings.vSyncCount = 0; // this applies to the companion window
+
+		if (lockPhysicsUpdateRateToRenderFrequency)
+			Time.fixedDeltaTime = 1.0f / vr.hmd_DisplayFrequency;
 	}
 
 	void OnGUI()

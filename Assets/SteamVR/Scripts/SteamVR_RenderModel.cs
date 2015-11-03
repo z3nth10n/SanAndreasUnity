@@ -15,6 +15,15 @@ public class SteamVR_RenderModel : MonoBehaviour
 	public SteamVR_TrackedObject.EIndex index;
 	public string modelOverride;
 
+	// If someone knows how to keep these from getting cleaned up every time
+	// you exit play mode, let me know.  I've tried marking the RenderModel
+	// class below as [System.Serializable] and switching to normal public
+	// variables for mesh and material to get them to serialize properly,
+	// as well as tried marking the mesh and material objects as
+	// DontUnloadUnusedAsset, but Unity was still unloading them.
+	// The hashtable is preserving its entries, but the mesh and material
+	// variables are going null.
+
 	public class RenderModel
 	{
 		public RenderModel(Mesh mesh, Texture2D texture)
@@ -65,16 +74,18 @@ public class SteamVR_RenderModel : MonoBehaviour
 
 	private void SetModel(string renderModelName)
 	{
-		if (!models.Contains(renderModelName))
+		var model = models[renderModelName] as RenderModel;
+		if (model == null || model.mesh == null)
 		{
 			Debug.Log("Loading render model " + renderModelName);
 
-			var result = LoadRenderModel(renderModelName);
-			if (result != null)
-				models[renderModelName] = result;
+			model = LoadRenderModel(renderModelName);
+			if (model == null)
+				return;
+
+			models[renderModelName] = model;
 		}
 
-		var model = models[renderModelName] as RenderModel;
 		GetComponent<MeshFilter>().mesh = model.mesh;
 		GetComponent<MeshRenderer>().sharedMaterial = model.material;
 	}
@@ -142,6 +153,9 @@ public class SteamVR_RenderModel : MonoBehaviour
 		mesh.uv = uv;
 		mesh.triangles = triangles;
 
+		mesh.Optimize();
+		//mesh.hideFlags = HideFlags.DontUnloadUnusedAsset;
+
 		var textureMapData = new byte[renderModel.diffuseTexture.unWidth * renderModel.diffuseTexture.unHeight * 4]; // RGBA
 		Marshal.Copy(renderModel.diffuseTexture.rubTextureMapData, textureMapData, 0, textureMapData.Length);
 
@@ -163,6 +177,8 @@ public class SteamVR_RenderModel : MonoBehaviour
 		texture.SetPixels32(colors);
 		texture.Apply();
 
+		//texture.hideFlags = HideFlags.DontUnloadUnusedAsset;
+
 		renderModels.FreeRenderModel(ref renderModel);
 
 		if (!SteamVR.active)
@@ -173,16 +189,40 @@ public class SteamVR_RenderModel : MonoBehaviour
 
 	void OnEnable()
 	{
+		// Make sure the mesh gets rendered.
+		GetComponent<MeshRenderer>().enabled = true;
+
+#if UNITY_EDITOR
+		if (!Application.isPlaying)
+			return;
+#endif
 		if (!string.IsNullOrEmpty(modelOverride))
-			SetModel(modelOverride);
-		else
-			SteamVR_Utils.Event.Listen("device_connected", OnDeviceConnected);
+		{
+			Debug.Log("Model override is really only meant to be used in the scene view for lining things up; using it at runtime is discouraged.  Use tracked device index instead to ensure the correct model is displayed for all users.");
+			enabled = false;
+			return;
+		}
+
+		if (SteamVR.active)
+		{
+			var vr = SteamVR.instance;
+			if (vr.hmd.IsTrackedDeviceConnected((uint)index))
+				UpdateModel();
+		}
+
+		SteamVR_Utils.Event.Listen("device_connected", OnDeviceConnected);
 	}
 
 	void OnDisable()
 	{
+		// Also hide the mesh.
+		GetComponent<MeshRenderer>().enabled = false;
+
+#if UNITY_EDITOR
+		if (!Application.isPlaying)
+			return;
+#endif
 		SteamVR_Utils.Event.Remove("device_connected", OnDeviceConnected);
-		GetComponent<MeshFilter>().mesh = null;
 	}
 
 #if UNITY_EDITOR
@@ -192,5 +232,12 @@ public class SteamVR_RenderModel : MonoBehaviour
 			SetModel(modelOverride);
 	}
 #endif
+
+	public void SetDeviceIndex(int index)
+	{
+		this.index = (SteamVR_TrackedObject.EIndex)index;
+		modelOverride = "";
+		UpdateModel();
+	}
 }
 

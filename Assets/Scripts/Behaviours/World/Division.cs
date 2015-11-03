@@ -45,6 +45,8 @@ namespace SanAndreasUnity.Behaviours.World
 
         internal float LoadOrder { get; private set; }
 
+        private float _nextGlobalLoadTime;
+
         public void SetBounds(Vector2 min, Vector2 max)
         {
             Min = min;
@@ -52,11 +54,13 @@ namespace SanAndreasUnity.Behaviours.World
 
             var mid = (Max + Min) * .5f;
 
-            if (float.IsNaN(mid.x) || float.IsInfinity(mid.x)) {
+            if (float.IsNaN(mid.x) || float.IsInfinity(mid.x))
+            {
                 mid.x = 0f;
             }
 
-            if (float.IsNaN(mid.y) || float.IsInfinity(mid.y)) {
+            if (float.IsNaN(mid.y) || float.IsInfinity(mid.y))
+            {
                 mid.y = 0f;
             }
 
@@ -69,18 +73,21 @@ namespace SanAndreasUnity.Behaviours.World
 
         private void Subdivide()
         {
-            if (IsSubdivided) {
+            if (IsSubdivided)
+            {
                 throw new InvalidOperationException("Already subdivided");
             }
 
-            if (_objects.Count == 0) {
+            if (_objects.Count == 0)
+            {
                 throw new InvalidOperationException("Cannot subdivide an empty leaf");
             }
 
             var min = Max;
             var max = Min;
 
-            foreach (var obj in _objects) {
+            foreach (var obj in _objects)
+            {
                 var pos = obj.CellPos;
                 min.x = Mathf.Min(pos.x, min.x);
                 min.y = Mathf.Min(pos.y, min.y);
@@ -98,11 +105,14 @@ namespace SanAndreasUnity.Behaviours.World
             var mid = _objects.Count / 2;
             var median = (_objects[mid - 1].CellPos + _objects[mid].CellPos) * .5f;
 
-            if (_isVertSplit) {
+            if (_isVertSplit)
+            {
                 _splitVal = median.x;
                 _childA.SetBounds(Min, new Vector2(_splitVal, Max.y));
                 _childB.SetBounds(new Vector2(_splitVal, Min.y), Max);
-            } else {
+            }
+            else
+            {
                 _splitVal = median.y;
                 _childA.SetBounds(Min, new Vector2(Max.x, _splitVal));
                 _childB.SetBounds(new Vector2(Min.x, _splitVal), Max);
@@ -119,7 +129,8 @@ namespace SanAndreasUnity.Behaviours.World
 
         private void AddInternal(MapObject obj)
         {
-            if (IsSubdivided) {
+            if (IsSubdivided)
+            {
                 var comp = _isVertSplit ? obj.CellPos.x : obj.CellPos.y;
                 (comp < _splitVal ? _childA : _childB).AddInternal(obj);
                 return;
@@ -138,7 +149,8 @@ namespace SanAndreasUnity.Behaviours.World
 
         public void AddRange(IEnumerable<MapObject> objs)
         {
-            foreach (var obj in objs.OrderBy(x => x.RandomInt)) {
+            foreach (var obj in objs.OrderBy(x => x.RandomInt))
+            {
                 AddInternal(obj);
             }
 
@@ -147,16 +159,20 @@ namespace SanAndreasUnity.Behaviours.World
 
         private void UpdateParents()
         {
-            if (IsSubdivided) {
+            if (IsSubdivided)
+            {
                 _childA.UpdateParents();
                 _childB.UpdateParents();
-            } else {
+            }
+            else
+            {
                 if (_objects.Count == 0) return;
 
                 var sum = _objects.Aggregate(new Vector2(), (s, x) => s + x.CellPos);
                 transform.position = new Vector3(sum.x / _objects.Count, 0f, sum.y / _objects.Count);
 
-                foreach (var obj in _objects) {
+                foreach (var obj in _objects)
+                {
                     obj.transform.SetParent(transform, true);
                 }
             }
@@ -186,9 +202,12 @@ namespace SanAndreasUnity.Behaviours.World
             var min = new Vector2(Math.Max(Min.x, -8192f), Math.Max(Min.y, -8192f));
             var max = new Vector2(Math.Min(Max.x, +8192f), Math.Min(Max.y, +8192f));
 
-            if (_isVertSplit) {
+            if (_isVertSplit)
+            {
                 Gizmos.DrawLine(new Vector3(_splitVal, 0f, min.y), new Vector3(_splitVal, 0f, max.y));
-            } else {
+            }
+            else
+            {
                 Gizmos.DrawLine(new Vector3(min.x, 0f, _splitVal), new Vector3(max.x, 0f, _splitVal));
             }
         }
@@ -207,19 +226,35 @@ namespace SanAndreasUnity.Behaviours.World
         {
             var toLoad = false;
 
-            if (Vector3.Distance(from, _lastRefreshPos) > GetDistance(from) / 16f) {
+            if (Vector3.Distance(from, _lastRefreshPos) > GetDistance(from) / 16f)
+            {
                 _lastRefreshPos = from;
-                foreach (var obj in _objects) {
-                    toLoad |= obj.RefreshLoadOrder(from);
+
+                for (var i = _objects.Count - 1; i >= 0; --i)
+                {
+                    toLoad |= _objects[i].RefreshLoadOrder(from);
                 }
-            } else {
-                toLoad = _objects.Any(x => !float.IsPositiveInfinity(x.LoadOrder));
+            }
+            else if (Time.time >= _nextGlobalLoadTime)
+            {
+                _nextGlobalLoadTime += UnityEngine.Random.value + 0.5f;
+
+                for (var i = _objects.Count - 1; i >= 0; --i)
+                {
+                    if (float.IsPositiveInfinity(_objects[i].LoadOrder)) continue;
+
+                    toLoad = true;
+                    break;
+                }
             }
 
-            if (toLoad) {
+            if (toLoad)
+            {
                 _objects.Sort();
                 LoadOrder = _objects[0].LoadOrder;
-            } else {
+            }
+            else
+            {
                 LoadOrder = float.PositiveInfinity;
             }
 
@@ -228,7 +263,8 @@ namespace SanAndreasUnity.Behaviours.World
 
         public bool LoadWhile(Func<bool> predicate)
         {
-            foreach (var toLoad in _objects) {
+            foreach (var toLoad in _objects)
+            {
                 if (float.IsPositiveInfinity(toLoad.LoadOrder)) break;
                 toLoad.Show();
                 if (!predicate()) break;
@@ -239,7 +275,8 @@ namespace SanAndreasUnity.Behaviours.World
 
         public IEnumerator<Division> GetEnumerator()
         {
-            if (IsSubdivided) {
+            if (IsSubdivided)
+            {
                 return _childA.Concat(_childB).GetEnumerator();
             }
 

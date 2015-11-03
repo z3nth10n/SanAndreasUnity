@@ -288,7 +288,7 @@ namespace SanAndreasUnity.Importing.Conversion
                 }
             }
         }
-
+        
         public TextureNative GetDiffuseNative(string name)
         {
             if (!_diffuse.ContainsKey(name)) {

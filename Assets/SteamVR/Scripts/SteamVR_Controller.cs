@@ -4,9 +4,9 @@
 //
 // Example usage:
 //
-//	var deviceIndex = SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.Leftmost);
-//	if (SteamVR_Controller.Input(deviceIndex).GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
-//		SteamVR_Controller.Input(deviceIndex).TriggerHapticPulse(100);
+//	var deviceIndex = SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.DeviceRelation.Leftmost);
+//	if (deviceIndex != -1 && SteamVR_Controller.Input(deviceIndex).GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
+//		SteamVR_Controller.Input(deviceIndex).TriggerHapticPulse(1000);
 //
 //=============================================================================
 
@@ -34,8 +34,9 @@ public class SteamVR_Controller
 		public Device(uint i) { index = i; }
 		public uint index { get; private set; }
 
-		public bool valid { get { Update(); return pose.bPoseIsValid; } }
+		public bool valid { get; private set; }
 		public bool connected { get { Update(); return pose.bDeviceIsConnected; } }
+		public bool hasTracking { get { Update(); return pose.bPoseIsValid; } }
 
 		public bool outOfRange { get { Update(); return pose.eTrackingResult == HmdTrackingResult.TrackingResult_Running_OutOfRange || pose.eTrackingResult == HmdTrackingResult.TrackingResult_Calibrating_OutOfRange; } }
 		public bool calibrating { get { Update(); return pose.eTrackingResult == HmdTrackingResult.TrackingResult_Calibrating_InProgress || pose.eTrackingResult == HmdTrackingResult.TrackingResult_Calibrating_OutOfRange; } }
@@ -43,7 +44,7 @@ public class SteamVR_Controller
 
 		public SteamVR_Utils.RigidTransform transform { get { Update(); return new SteamVR_Utils.RigidTransform(pose.mDeviceToAbsoluteTracking); } }
 		public Vector3 velocity { get { Update(); return new Vector3(pose.vVelocity.v[0], pose.vVelocity.v[1], -pose.vVelocity.v[2]); } }
-		public Vector3 angularVelocity { get { Update(); return new Vector3(pose.vAngularVelocity.v[0], pose.vAngularVelocity.v[1], -pose.vAngularVelocity.v[2]); } }
+		public Vector3 angularVelocity { get { Update(); return new Vector3(-pose.vAngularVelocity.v[0], -pose.vAngularVelocity.v[1], pose.vAngularVelocity.v[2]); } }
 
 		VRControllerState_t state, prevState;
 		TrackedDevicePose_t pose;
@@ -56,7 +57,7 @@ public class SteamVR_Controller
 				prevState = state;
 
 				var vr = SteamVR.instance;
-				vr.hmd.GetControllerStateWithPose(SteamVR_Render.instance.trackingSpace, index, ref state, ref pose);
+				valid = vr.hmd.GetControllerStateWithPose(SteamVR_Render.instance.trackingSpace, index, ref state, ref pose);
 
 				UpdateHairTrigger();
 			}
@@ -144,20 +145,23 @@ public class SteamVR_Controller
 	public enum DeviceRelation
 	{
 		First,
+		// radially
 		Leftmost,
 		Rightmost,
+		// distance - also see vr.hmd.GetSortedTrackedDeviceIndicesOfClass
+		FarthestLeft,
+		FarthestRight,
 	}
 	public static int GetDeviceIndex(DeviceRelation relation,
 		TrackedDeviceClass deviceClass = TrackedDeviceClass.Controller,
 		int relativeTo = (int)OpenVR.k_unTrackedDeviceIndex_Hmd) // use -1 for absolute tracking space
 	{
-		var invXform = ((uint)relativeTo < OpenVR.k_unTrackedDeviceIndex_Hmd) ?
+		var invXform = ((uint)relativeTo < OpenVR.k_unMaxTrackedDeviceCount) ?
 			Input(relativeTo).transform.GetInverse() : SteamVR_Utils.RigidTransform.identity;
 
 		var vr = SteamVR.instance;
 		var result = -1;
 		var best = -float.MaxValue;
-		var dir = (relation == DeviceRelation.Leftmost) ? Vector3.left : Vector3.right;
 		for (int i = 0; i < OpenVR.k_unMaxTrackedDeviceCount; i++)
 		{
 			if (i == relativeTo || vr.hmd.GetTrackedDeviceClass((uint)i) != deviceClass)
@@ -170,7 +174,32 @@ public class SteamVR_Controller
 			if (relation == DeviceRelation.First)
 				return i;
 
-			var score = Vector3.Dot(dir, invXform * device.transform.pos);
+			float score;
+
+			var pos = invXform * device.transform.pos;
+			if (relation == DeviceRelation.FarthestRight)
+			{
+				score = pos.x;
+			}
+			else if (relation == DeviceRelation.FarthestLeft)
+			{
+				score = -pos.x;
+			}
+			else
+			{
+				var dir = new Vector3(pos.x, 0.0f, pos.z).normalized;
+				var dot = Vector3.Dot(dir, Vector3.forward);
+				var cross = Vector3.Cross(dir, Vector3.forward);
+				if (relation == DeviceRelation.Leftmost)
+				{
+					score = (cross.y > 0.0f) ? 2.0f - dot : dot;
+				}
+				else
+				{
+					score = (cross.y < 0.0f) ? 2.0f - dot : dot;
+				}
+			}
+			
 			if (score > best)
 			{
 				result = i;

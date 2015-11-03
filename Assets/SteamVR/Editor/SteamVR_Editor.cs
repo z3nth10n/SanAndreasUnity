@@ -114,8 +114,7 @@ public class SteamVR_Editor : Editor
 		AssetDatabase.ExportPackage(new string[] {
 			"Assets/SteamVR",
 			"Assets/Plugins/openvr_api.cs",
-			"Assets/Plugins/steam_api_interop.cs",
-			"Assets/Plugins/steam_api.bundle",
+			"Assets/Plugins/openvr_api.bundle",
 			"Assets/Plugins/x86/openvr_api.dll",
 			"Assets/Plugins/x86/steam_api.dll",
 			"Assets/Plugins/x86/libsteam_api.so",

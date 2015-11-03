@@ -49,8 +49,8 @@ public class SteamVR_TestController : MonoBehaviour
 	{
 		var device = SteamVR_Controller.Input(index);
 		Debug.Log("index: " + device.index);
-		Debug.Log("valid: " + device.valid);
 		Debug.Log("connected: " + device.connected);
+		Debug.Log("hasTracking: " + device.hasTracking);
 		Debug.Log("outOfRange: " + device.outOfRange);
 		Debug.Log("calibrating: " + device.calibrating);
 		Debug.Log("uninitialized: " + device.uninitialized);

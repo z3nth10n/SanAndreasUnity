@@ -1,4 +1,4 @@
-SteamVR plugin for Unity - v1.0.2
+SteamVR plugin for Unity - v1.0.5
 Copyright 2014-2015, Valve Corporation, All rights reserved.
 
 
@@ -13,6 +13,89 @@ Requirements:
 The SteamVR runtime must be installed.  This can be found in Steam under Tools.
 
 The plugin currently only supports Windows / DX11.
+
+
+Changes for v1.0.5:
+
+* Updated to SteamVR runtime build #826021 (v.1445485596).
+
+* Removed TrackedDevices from [CameraRig] prefab (these were only ever meant to be in the example scene.
+
+* Added support for new native plugin interface.
+
+* Enabled MSAA in OpenGL as that appears to be fixed in the latest version of Unity.
+
+* Fix for upside-down rendering in OpenGL.
+
+* Moved calls to IVRCompositor::WaitGetPoses and Submit to Unity's render thread.
+
+* Couple fixes to prevent SteamVR from getting re-initialized when stopping the Editor preview.
+
+* Fix for hitches caused by SteamVR_PlayArea when not running SteamVR.
+
+
+Changes for v1.0.4:
+
+* Updated to SteamVR runtime build #768489 (v.1441831863).
+
+* Added SteamVR_Skybox for setting a cubemap in the compositor (useful for scene transitions).
+
+* Fix for RenderModels disappearing across scene transitions, and disabling use of modelOverride at runtime.
+
+* Added lockPhysicsUpdateRateToRenderFrequency to SteamVR_Render ([SteamVR] prefab) for apps that want to run their physics sim at a lower frequency.  Locked (true) by default.
+
+* Made per-eye culling masks easier to use.  (See http://steamcommunity.com/app/250820/discussions/0/535152276589455019/)
+
+* Exposed min/max curve distance settings for high quality overlay.  Note: High quality overlay not currently supported in Rift Direct Mode and falls back to normal (flat-only) overlay render path.
+
+* Added 'valid' property to SteamVR_Controller.  This is useful for detecting the controller is plugged in before tracking comes online.
+
+
+Changes for v1.0.3:
+
+* Updated to SteamVR runtime build #710329 (v.1438035413).
+
+* Added SteamVR_Controller.DeviceRelation.FarthestLeft/Right for GetDeviceIndex helper function.
+Note: You can also use SteamVR.instance.hmd.GetSortedTrackedDeviceIndicesOfClass.
+
+* Updated and fixed SteamVR_Controller.GetDeviceIndex to act more like people expect.
+
+* Fix for SteamVR_Controller.angularVelocity (velocity reporting has also been fixed in the runtime).
+
+* Renamed SteamVR_Controller.valid to hasTracking
+
+* Removed SteamVR_Overlay visibility, systemOverlayVisible and activeSystemOverlay properties.
+
+* Added collection of handy scripts to Assets/SteamVR/Extras: GazeTracker, IK (simple two-bone),
+LaserPointer, Teleporter, TestThrow (with example scene) and TrackedController.
+
+* Fix for hidden area mesh render order.
+
+* Fix for render models not showing up after playing scene once in editor.
+
+* Added controller manager left and right nodes to camera rig.  These are automatically disabled while the
+dashboard is visible to avoid conflict with the dashboard rendering controllers.  If you are handling tracked
+controllers using another method, you are encouraged to implement something similar using the input_focus event.
+
+* OpenVR runtime events are now broadcast via the SteamVR_Utils.Event system.  The events can be found here:
+https://github.com/ValveSoftware/openvr/blob/master/headers/openvr.h and are broadcast in Unity with their
+prefix "VREvent_" stripped off.
+
+* Added handling of dashboard visibility and quit events.
+
+* Added SteamVR_Render.pauseGameWhenDashboardIsVisible (defaults to true).
+
+* Allow Unity to buffer up frames for its companion window to avoid any latency introduction
+
+* Lock physics update rate (Time.fixedDeltaTime) to match render frequency.
+
+* SteamVR_Camera (i.e. 'eye' objects) are moved back to the 'head' location when not rendering.
+
+* Simplified SteamVR_Camera Expand/Collapse functionality (now uses existing parent as origin if available).
+
+* Added SteamVR_PlayArea component to visualize different size spaces to target.
+
+* Exposed SteamVR_Overlay.curvedRange for the high-quality curved overlay render path.
 
 
 Changes for v1.0.2:

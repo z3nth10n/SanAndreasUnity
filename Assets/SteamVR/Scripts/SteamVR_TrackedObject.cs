@@ -77,5 +77,11 @@ public class SteamVR_TrackedObject : MonoBehaviour
 	{
 		SteamVR_Utils.Event.Remove("new_poses", OnNewPoses);
 	}
+
+	public void SetDeviceIndex(int index)
+	{
+		if (System.Enum.IsDefined(typeof(EIndex), index))
+			this.index = (EIndex)index;
+	}
 }
 
