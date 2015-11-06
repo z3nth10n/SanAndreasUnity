@@ -142,7 +142,7 @@ namespace SanAndreasUnity.Behaviours.World
 
                 if (sign == 0 || sign == 1 && val >= dest || sign == -1 && val <= dest) break;
 
-                pb.SetFloat(FadeId, (float) val);
+                pb.SetFloat(FadeId, val);
                 mr.SetPropertyBlock(pb);
                 yield return new WaitForEndOfFrame();
             }

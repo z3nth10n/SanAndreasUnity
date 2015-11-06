@@ -1,0 +1,480 @@
+fileFormatVersion: 2
+guid: 9b5d74605c5e67b43abc060e716a5b67
+timeCreated: 1441192218
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: _HOLD_leftarm
+    100002: _HOLD_magazine
+    100004: _HOLD_rightarm
+    100006: _HOLD_slide
+    100008: _ROOT_semi_pistol
+    100010: bullet
+    100012: guide_rod
+    100014: head
+    100016: jaw
+    100018: joint10
+    100020: joint12
+    100022: joint14
+    100024: joint16
+    100026: joint18
+    100028: joint4
+    100030: joint6
+    100032: joint8
+    100034: L_Arm_IKHandle
+    100036: L_Arm_PoleVector
+    100038: l_clavicle
+    100040: l_eye
+    100042: l_foot
+    100044: l_forearm
+    100046: l_hand
+    100048: L_Hand_IKPosition_CTRL
+    100050: L_Hand_Rotation_CTRL
+    100052: l_hip
+    100054: l_index1
+    100056: l_index2
+    100058: l_index3
+    100060: l_knee
+    100062: L_Leg_PoleVector
+    100064: l_little1
+    100066: l_little2
+    100068: l_little3
+    100070: l_middle1
+    100072: l_middle2
+    100074: l_middle3
+    100076: l_prop
+    100078: l_ring1
+    100080: l_ring2
+    100082: l_ring3
+    100084: l_thumb1
+    100086: l_thumb2
+    100088: l_thumb3
+    100090: l_toe
+    100092: l_ulna
+    100094: l_upperarm
+    100096: magazine
+    100098: neck
+    100100: pelvis
+    100102: penis
+    100104: R_Arm_IKHandle
+    100106: R_Arm_PoleVector
+    100108: r_clavicle
+    100110: r_eye
+    100112: r_foot
+    100114: r_forearm
+    100116: r_hand
+    100118: R_Hand_IKPosition_CTRL
+    100120: R_Hand_Rotation_CTRL
+    100122: r_hip
+    100124: r_index1
+    100126: r_index2
+    100128: r_index3
+    100130: r_knee
+    100132: R_Leg_PoleVector
+    100134: r_little1
+    100136: r_little2
+    100138: r_little3
+    100140: r_middle1
+    100142: r_middle2
+    100144: r_middle3
+    100146: r_prop
+    100148: r_ring1
+    100150: r_ring2
+    100152: r_ring3
+    100154: r_thumb1
+    100156: r_thumb2
+    100158: r_thumb3
+    100160: r_toe
+    100162: r_ulna
+    100164: r_upperarm
+    100166: slide
+    100168: slide_lock
+    100170: spine1
+    100172: spine2
+    100174: spine3
+    100176: spine4
+    100178: Spine_Lower_CTRL
+    100180: Spine_Upper_CTRL
+    100182: trigger
+    100184: trigger_spring
+    100186: //RootNode
+    400000: _HOLD_leftarm
+    400002: _HOLD_magazine
+    400004: _HOLD_rightarm
+    400006: _HOLD_slide
+    400008: _ROOT_semi_pistol
+    400010: bullet
+    400012: guide_rod
+    400014: head
+    400016: jaw
+    400018: joint10
+    400020: joint12
+    400022: joint14
+    400024: joint16
+    400026: joint18
+    400028: joint4
+    400030: joint6
+    400032: joint8
+    400034: L_Arm_IKHandle
+    400036: L_Arm_PoleVector
+    400038: l_clavicle
+    400040: l_eye
+    400042: l_foot
+    400044: l_forearm
+    400046: l_hand
+    400048: L_Hand_IKPosition_CTRL
+    400050: L_Hand_Rotation_CTRL
+    400052: l_hip
+    400054: l_index1
+    400056: l_index2
+    400058: l_index3
+    400060: l_knee
+    400062: L_Leg_PoleVector
+    400064: l_little1
+    400066: l_little2
+    400068: l_little3
+    400070: l_middle1
+    400072: l_middle2
+    400074: l_middle3
+    400076: l_prop
+    400078: l_ring1
+    400080: l_ring2
+    400082: l_ring3
+    400084: l_thumb1
+    400086: l_thumb2
+    400088: l_thumb3
+    400090: l_toe
+    400092: l_ulna
+    400094: l_upperarm
+    400096: magazine
+    400098: neck
+    400100: pelvis
+    400102: penis
+    400104: R_Arm_IKHandle
+    400106: R_Arm_PoleVector
+    400108: r_clavicle
+    400110: r_eye
+    400112: r_foot
+    400114: r_forearm
+    400116: r_hand
+    400118: R_Hand_IKPosition_CTRL
+    400120: R_Hand_Rotation_CTRL
+    400122: r_hip
+    400124: r_index1
+    400126: r_index2
+    400128: r_index3
+    400130: r_knee
+    400132: R_Leg_PoleVector
+    400134: r_little1
+    400136: r_little2
+    400138: r_little3
+    400140: r_middle1
+    400142: r_middle2
+    400144: r_middle3
+    400146: r_prop
+    400148: r_ring1
+    400150: r_ring2
+    400152: r_ring3
+    400154: r_thumb1
+    400156: r_thumb2
+    400158: r_thumb3
+    400160: r_toe
+    400162: r_ulna
+    400164: r_upperarm
+    400166: slide
+    400168: slide_lock
+    400170: spine1
+    400172: spine2
+    400174: spine3
+    400176: spine4
+    400178: Spine_Lower_CTRL
+    400180: Spine_Upper_CTRL
+    400182: trigger
+    400184: trigger_spring
+    400186: //RootNode
+    7400000: dryfire
+    9500000: //RootNode
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0
+    animationPositionError: 0
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: dryfire
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: .00146503677
+        functionName: DoEffect
+        data: dryfire
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask:
+      - path: 
+        weight: 1
+      - path: _ROOT_semi_pistol
+        weight: 1
+      - path: _ROOT_semi_pistol/joint14
+        weight: 1
+      - path: _ROOT_semi_pistol/joint14/guide_rod
+        weight: 1
+      - path: _ROOT_semi_pistol/joint14/guide_rod/joint10
+        weight: 1
+      - path: _ROOT_semi_pistol/joint14/magazine
+        weight: 1
+      - path: _ROOT_semi_pistol/joint14/magazine/_HOLD_magazine
+        weight: 1
+      - path: _ROOT_semi_pistol/joint14/magazine/joint18
+        weight: 1
+      - path: _ROOT_semi_pistol/joint14/magazine/joint18/bullet
+        weight: 1
+      - path: _ROOT_semi_pistol/joint14/magazine/joint18/bullet/joint8
+        weight: 1
+      - path: _ROOT_semi_pistol/joint14/slide
+        weight: 1
+      - path: _ROOT_semi_pistol/joint14/slide/_HOLD_slide
+        weight: 1
+      - path: _ROOT_semi_pistol/joint14/slide/joint6
+        weight: 1
+      - path: _ROOT_semi_pistol/joint14/slide_lock
+        weight: 1
+      - path: _ROOT_semi_pistol/joint14/slide_lock/joint12
+        weight: 1
+      - path: _ROOT_semi_pistol/joint14/trigger
+        weight: 1
+      - path: _ROOT_semi_pistol/joint14/trigger/joint4
+        weight: 1
+      - path: _ROOT_semi_pistol/joint14/trigger_spring
+        weight: 1
+      - path: _ROOT_semi_pistol/joint14/trigger_spring/joint16
+        weight: 1
+      - path: pelvis
+        weight: 1
+      - path: pelvis/l_hip
+        weight: 1
+      - path: pelvis/l_hip/l_knee
+        weight: 1
+      - path: pelvis/l_hip/l_knee/l_foot
+        weight: 1
+      - path: pelvis/l_hip/l_knee/l_foot/l_toe
+        weight: 1
+      - path: pelvis/L_Leg_PoleVector
+        weight: 1
+      - path: pelvis/penis
+        weight: 1
+      - path: pelvis/r_hip
+        weight: 1
+      - path: pelvis/r_hip/r_knee
+        weight: 1
+      - path: pelvis/r_hip/r_knee/r_foot
+        weight: 1
+      - path: pelvis/r_hip/r_knee/r_foot/r_toe
+        weight: 1
+      - path: pelvis/R_Leg_PoleVector
+        weight: 1
+      - path: pelvis/spine1
+        weight: 1
+      - path: pelvis/spine1/spine2
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/L_Arm_PoleVector
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/L_Hand_IKPosition_CTRL
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/L_Hand_IKPosition_CTRL/L_Arm_IKHandle
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_hand
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_hand/_HOLD_leftarm
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_hand/l_index1
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_hand/l_index1/l_index2
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_hand/l_index1/l_index2/l_index3
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_hand/l_little1
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_hand/l_little1/l_little2
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_hand/l_little1/l_little2/l_little3
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_hand/l_middle1
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_hand/l_middle1/l_middle2
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_hand/l_middle1/l_middle2/l_middle3
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_hand/l_prop
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_hand/l_ring1
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_hand/l_ring1/l_ring2
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_hand/l_ring1/l_ring2/l_ring3
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_hand/l_thumb1
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_hand/l_thumb1/l_thumb2
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_hand/l_thumb1/l_thumb2/l_thumb3
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/L_Hand_Rotation_CTRL
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/l_clavicle/l_upperarm/l_forearm/l_ulna
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/neck
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/neck/head
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/neck/head/jaw
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/neck/head/l_eye
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/neck/head/r_eye
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/R_Arm_PoleVector
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/R_Hand_IKPosition_CTRL
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/R_Hand_IKPosition_CTRL/R_Arm_IKHandle
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_hand
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_hand/_HOLD_rightarm
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_hand/r_index1
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_hand/r_index1/r_index2
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_hand/r_index1/r_index2/r_index3
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_hand/r_little1
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_hand/r_little1/r_little2
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_hand/r_little1/r_little2/r_little3
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_hand/r_middle1
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_hand/r_middle1/r_middle2
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_hand/r_middle1/r_middle2/r_middle3
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_hand/r_prop
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_hand/r_ring1
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_hand/r_ring1/r_ring2
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_hand/r_ring1/r_ring2/r_ring3
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_hand/r_thumb1
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_hand/r_thumb1/r_thumb2
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_hand/r_thumb1/r_thumb2/r_thumb3
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/R_Hand_Rotation_CTRL
+        weight: 1
+      - path: pelvis/spine1/spine2/spine3/spine4/r_clavicle/r_upperarm/r_forearm/r_ulna
+        weight: 1
+      - path: pelvis/spine1/spine2/Spine_Upper_CTRL
+        weight: 1
+      - path: pelvis/spine1/Spine_Lower_CTRL
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,311 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: semi auto pistol
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _NORMALMAP _SPECGLOSSMAP
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: 2000
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: fe9debc56ed791d4cb146fe528a10e17, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _BumpMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 0f51d21b49079944581acb136dc86417, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailNormalMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ParallaxMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _OcclusionMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 93c2a4ce94cb2d542abd52a66d35298e, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _EmissionMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailMask
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailAlbedoMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _MetallicGlossMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _WetnessLayer_Mask
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _WetnessLayer_SpecGlossMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _SpecGlossMap
+        second:
+          m_Texture: {fileID: 2800000, guid: f62666fbcf7b1d64eb9709095a42aebf, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailOcclusionMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ParticleLayer_AlbedoMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ParticleLayer_NormalMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ParticleLayer_SpecGlossMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _SrcBlend
+        second: 1
+      data:
+        first:
+          name: _DstBlend
+        second: 0
+      data:
+        first:
+          name: _Cutoff
+        second: .5
+      data:
+        first:
+          name: _Parallax
+        second: .0199999996
+      data:
+        first:
+          name: _ZWrite
+        second: 1
+      data:
+        first:
+          name: _Glossiness
+        second: .551999986
+      data:
+        first:
+          name: _BumpScale
+        second: 1
+      data:
+        first:
+          name: _OcclusionStrength
+        second: 1
+      data:
+        first:
+          name: _DetailNormalMapScale
+        second: 1
+      data:
+        first:
+          name: _UVSec
+        second: 0
+      data:
+        first:
+          name: _Mode
+        second: 0
+      data:
+        first:
+          name: _Metallic
+        second: 0
+      data:
+        first:
+          name: _EmissionScaleUI
+        second: 0
+      data:
+        first:
+          name: _WetnessLayer
+        second: 0
+      data:
+        first:
+          name: _WetnessLayer_Intensity
+        second: 1
+      data:
+        first:
+          name: _WetnessLayer_OcclusionStrength
+        second: 0
+      data:
+        first:
+          name: _WetnessLayer_Glossiness
+        second: .699999988
+      data:
+        first:
+          name: _ShoreWetnessLayer
+        second: 0
+      data:
+        first:
+          name: _DetailUVSet
+        second: 0
+      data:
+        first:
+          name: _EnvReflOcclusionStrength
+        second: 0
+      data:
+        first:
+          name: _EnvReflHorizonFade
+        second: 0
+      data:
+        first:
+          name: _DetailLayer
+        second: 0
+      data:
+        first:
+          name: _DetailOverlaySmoothness
+        second: 0
+      data:
+        first:
+          name: _DetailOcclusionStrength
+        second: 1
+      data:
+        first:
+          name: _DetailOverlaySpecular
+        second: 0
+      data:
+        first:
+          name: _Cull
+        second: 2
+      data:
+        first:
+          name: _ParticleLayer
+        second: 0
+      data:
+        first:
+          name: _ParticleLayer_MapTiling
+        second: .0199999996
+      data:
+        first:
+          name: _ParticleLayer_Thickness
+        second: .200000003
+      data:
+        first:
+          name: _ParticleLayer_BlendFactor
+        second: .200000003
+      data:
+        first:
+          name: _ParticleLayer_BlendFalloff
+        second: 4.5
+      data:
+        first:
+          name: _ParticleLayer_Glossiness
+        second: .5
+      data:
+        first:
+          name: _ParticleLayer_NormalScale
+        second: 1
+    m_Colors:
+      data:
+        first:
+          name: _EmissionColor
+        second: {r: 0, g: 0, b: 0, a: 0}
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _EmissionColorUI
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _WetnessLayer_Tint
+        second: {r: .600000024, g: .600000024, b: .600000024, a: 1}
+      data:
+        first:
+          name: _WetnessLayer_SpecColor
+        second: {r: .200000003, g: .200000003, b: .200000003, a: 1}
+      data:
+        first:
+          name: _DetailColor
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _MainTexScroll
+        second: {r: 0, g: 0, b: 0, a: 0}
+      data:
+        first:
+          name: _DetailAlbedoMapScroll
+        second: {r: 0, g: 0, b: 0, a: 0}
+      data:
+        first:
+          name: _ParticleLayer_WorldDirection
+        second: {r: 0, g: 1, b: 0, a: 0}
+      data:
+        first:
+          name: _ParticleLayer_AlbedoColor
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _ParticleLayer_SpecColor
+        second: {r: .200000003, g: .200000003, b: .200000003, a: 1}

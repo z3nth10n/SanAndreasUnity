@@ -512,6 +512,8 @@ namespace SanAndreasUnity.Importing.Conversion
             return GetMaterials(flags, x => {});
         }
 
+        private static UnityEngine.Material _sDefaultMaterial;
+
         public UnityEngine.Material[] GetMaterials(MaterialFlags flags,
             Action<UnityEngine.Material> setupMaterial)
         {
@@ -519,7 +521,8 @@ namespace SanAndreasUnity.Importing.Conversion
                 return _materials[flags];
             }
 
-            var mats = _geom.Materials.Select(x => {
+            var mats = _geom.Materials.Select(x =>
+            {
                 var mat = Convert(x, _textureDictionaries, flags);
                 setupMaterial(mat);
                 return mat;

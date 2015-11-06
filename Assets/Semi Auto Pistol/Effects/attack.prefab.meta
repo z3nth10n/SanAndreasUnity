@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 540a799eb44dd154391b4e81d679147f
+labels:
+- EffectPrefab
+- UnparentOnDestroy
+timeCreated: 1434345540
+licenseType: Pro
+NativeFormatImporter:
+  userData: 
+  assetBundleName: shared/effects.bundle
+  assetBundleVariant: 

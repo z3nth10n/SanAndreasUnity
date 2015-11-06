@@ -1,0 +1,245 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &152916
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 408190}
+  - 114: {fileID: 11415462}
+  - 114: {fileID: 11428536}
+  - 114: {fileID: 11474046}
+  - 114: {fileID: 11406998}
+  m_Layer: 0
+  m_Name: pistol_semiauto.item
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &408190
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152916}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.4975653, y: 9.2402153, z: -10.7080259}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11406998
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1c370a50531d444a87b0793cd9f1c67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  capacity: 2
+  maxStackSize: 0
+  containerFlags: 32
+  onlyAllowedContents: 1
+  onlyAllowedItemType: {fileID: 0}
+  availableSlots: 020000000400000008000000
+  openInDeployed: 0
+  openInInventory: 1
+  defaultContents: []
+--- !u!114 &11415462
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1951b1ab6484204199c61d61418f363, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemid: 548699316
+  shortname: pistol.semiauto
+  displayName:
+    token: pistol.semiauto
+    english: Semi-Automatic Pistol
+  displayDescription:
+    token: pistol.semiauto.desc
+    english: A sem-automatic Pistol. Fires rapidly and with good accuracy.
+  iconSprite: {fileID: 21300000, guid: 84ccf9777f2ea4e41a22a40cbebf12f7, type: 3}
+  category: 0
+  selectionPanel: 2
+  stackable: 1
+  maxDraggable: 0
+  itemType: 1
+  amountType: 0
+  occupySlots: 0
+  rarity: 3
+  hidden: 0
+  flags: 0
+  needsBlueprint: {fileID: 0}
+  steamItem: {fileID: 0}
+  condition:
+    enabled: 1
+    max: 100
+    repairable: 1
+    foundCondition:
+      fractionMin: .00999999978
+      fractionMax: .0199999996
+  worldModelPrefab:
+    guid: 44e14975bbd7b964390a8cf4ffae653e
+--- !u!114 &11428536
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 555f5f019f7de8d439fe746428ac3c2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entityPrefab:
+    guid: feeefa135f4fd6442a61b0813dcd686f
+  defaultBone: 
+--- !u!114 &11474046
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 994548da332285c489d43a5897c4d8c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ingredients:
+  - itemDef: {fileID: 11468690, guid: a1fb39d8d7ae5b747a222f2eb373ae35, type: 2}
+    amount: 25
+  - itemDef: {fileID: 11477734, guid: a7b57e8b26089a846b593485a82891ca, type: 2}
+    amount: 15
+  time: 180
+  amountToCreate: 1
+  userCraftable: 1
+  defaultBlueprint: 0
+  isResearchable: 1
+  rarity: 3
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: ingredients.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: availableSlots.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: itemid
+      value: -2117223451
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: shortname
+      value: pistol_semiauto
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: entityPrefab.targetObject
+      value: 
+      objectReference: {fileID: 199994, guid: feeefa135f4fd6442a61b0813dcd686f, type: 2}
+    - target: {fileID: 0}
+      propertyPath: entityPrefab.resourcePath
+      value: weapons/pistol/semi_pistol.weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: displayName.token
+      value: item_name_pistol_semiauto
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: displayName.english
+      value: 'Semi-Automatic Pistol
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: displayDescription.english
+      value: 'A semi automatic pistol
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ingredients.Array.data[0].itemDef
+      value: 
+      objectReference: {fileID: 11468690, guid: a1fb39d8d7ae5b747a222f2eb373ae35,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: ingredients.Array.data[1].itemDef
+      value: 
+      objectReference: {fileID: 11477734, guid: a7b57e8b26089a846b593485a82891ca,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: ingredients.Array.data[2].itemDef
+      value: 
+      objectReference: {fileID: 11451946, guid: cf62733452adaa2439790a8a7217c86a,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: ingredients.Array.data[2].amount
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ingredients.Array.data[0].amount
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ingredients.Array.data[1].amount
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: time
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: iconSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 84ccf9777f2ea4e41a22a40cbebf12f7,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: worldModel.gameObject
+      value: 
+      objectReference: {fileID: 190346, guid: 44e14975bbd7b964390a8cf4ffae653e, type: 2}
+    - target: {fileID: 0}
+      propertyPath: occupySlots
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: selectionPanel
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: availableSlots.Array.data[2]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: containerFlags
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: condition.foundCondition.fractionMin
+      value: .00999999978
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: condition.foundCondition.fractionMax
+      value: .0199999996
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 152916}
+  m_IsPrefabParent: 1

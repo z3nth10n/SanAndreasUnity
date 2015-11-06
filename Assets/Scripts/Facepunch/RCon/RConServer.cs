@@ -26,7 +26,7 @@ namespace Facepunch.RCon
 
         public bool IsListening { get { return _socketServer.IsListening; } }
 
-        public Logger Log { get { return _socketServer.Log; } }
+        public WebSocketSharp.Logger Log { get { return _socketServer.Log; } }
 
         public TimeSpan SessionTimeout { get; set; }
 

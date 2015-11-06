@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183b121ac045f47108052d45d8f5d066, type: 3}
+  m_Name: attack
+  m_EditorClassIdentifier: 
+  template:
+    guid: 2aca56f2af2874c66a49515e5143adc0
+  weightedAudioClips:
+  - audioClip: {fileID: 8300000, guid: b98b120ef40eb4c90bf5e1c9b3018492, type: 3}
+    weight: 1
+  distanceAudioClips:
+  - distance: 100
+    audioClips:
+    - audioClip: {fileID: 8300000, guid: cb6fb4d7c8268409b9cb11bfe0667971, type: 3}
+      weight: 1
+  - distance: 250
+    audioClips:
+    - audioClip: {fileID: 8300000, guid: 2d0747edac5cd45a8a260bfa2e11ae23, type: 3}
+      weight: 1
+  output: {fileID: 24310706, guid: 4b03b05d926f42a4ba4864622937ab31, type: 2}
+  firstPersonOutput: {fileID: 0}
+  loop: 0
+  randomizeStartPosition: 0
+  volume: .744066179
+  volumeVariation: .0689999983
+  pitch: 1
+  pitchVariation: .100000001
+  dontVoiceLimit: 0
+  localVoiceMaxCount: 2
+  localVoiceRange: 1
+  localVoiceDebounceTime: 0

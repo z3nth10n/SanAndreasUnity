@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183b121ac045f47108052d45d8f5d066, type: 3}
+  m_Name: slide_shut
+  m_EditorClassIdentifier: 
+  soundTemplate: {fileID: 194100, guid: 6922af838eab04048b853ceb640657de, type: 2}
+  template:
+    guid: 6922af838eab04048b853ceb640657de
+  weightedAudioClips:
+  - audioClip: {fileID: 8300000, guid: 0c2531ce4eaa4ae4dad5102d5049a79d, type: 3}
+    weight: 1
+  distanceAudioClips: []
+  output: {fileID: 24326064, guid: 4b03b05d926f42a4ba4864622937ab31, type: 2}
+  firstPersonOutput: {fileID: 0}
+  loop: 0
+  randomizeStartPosition: 0
+  volume: .650847793
+  volumeVariation: .0689999983
+  pitch: 1
+  pitchVariation: .0219999999
+  dontVoiceLimit: 0
+  localVoiceMaxCount: 100
+  localVoiceRange: 10
+  localVoiceDebounceTime: .100000001

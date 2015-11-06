@@ -95,25 +95,37 @@ namespace SanAndreasUnity.Behaviours.Vehicles
             throw new Exception("Unable to find cars to spawn");
         }
 
-        public static Vehicle Create(VehicleSpawner spawner)
+        public static Vehicle Create(Transform dest, int carId = -1, int[] colors = null)
         {
             var inst = new GameObject().AddComponent<Vehicle>();
 
             VehicleDef def;
-            if (spawner.Info.CarId == -1) {
+            if (carId == -1)
+            {
                 def = GetRandomDef();
-            } else {
-                def = Item.GetDefinition<VehicleDef>(spawner.Info.CarId);
+            }
+            else
+            {
+                def = Item.GetDefinition<VehicleDef>(carId);
             }
 
-            inst.Initialize(def, spawner.Info.Colors);
+            inst.Initialize(def, colors);
 
-            inst.transform.position = spawner.transform.position - Vector3.up * inst.AverageWheelHeight;
-            inst.transform.localRotation = spawner.transform.rotation;
+            inst.transform.position = dest.position - Vector3.up * inst.AverageWheelHeight;
+            inst.transform.localRotation = dest.rotation;
 
-            Networking.Server.Instance.GlobalGroup.Add(inst);
+            if (Networking.Server.Instance != null)
+            {
+                Networking.Server.Instance.GlobalGroup.Add(inst);
+            }
 
             return inst;
+        }
+
+
+        public static Vehicle Create(VehicleSpawner spawner)
+        {
+            return Create(spawner.transform, spawner.Info.CarId, spawner.Info.Colors);
         }
 
         private Geometry.GeometryParts _geometryParts;

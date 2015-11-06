@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183b121ac045f47108052d45d8f5d066, type: 3}
+  m_Name: semi_pistol-attack-silenced
+  m_EditorClassIdentifier: 
+  template:
+    guid: 17bf21ae3ddf8fa4da8323c2d2e51f39
+  weightedAudioClips:
+  - audioClip: {fileID: 8300000, guid: 9fbd109c8ce0445238b1146cf127a7b6, type: 3}
+    weight: 1
+  distanceAudioClips: []
+  output: {fileID: 24393498, guid: 4b03b05d926f42a4ba4864622937ab31, type: 2}
+  firstPersonOutput: {fileID: 0}
+  loop: 0
+  randomizeStartPosition: 0
+  volume: .801884592
+  volumeVariation: .0560000017
+  pitch: 1
+  pitchVariation: .0829999968
+  dontVoiceLimit: 0
+  localVoiceMaxCount: 2
+  localVoiceRange: 1
+  localVoiceDebounceTime: 0
