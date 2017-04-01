@@ -43,11 +43,14 @@ namespace SanAndreasUnity.Behaviours.World
 		public	float	maxDrawDistance = 500;
 
 		public	bool	loadParkedVehicles = true;
-		private PlayerController _playerController;
+		private PlayerController _playerController = null;
 
 		void Awake() {
 			Instance = this;
-			_playerController = GameObject.Find ("Player").GetComponent<PlayerController> ();
+
+			try {
+				_playerController = GameObject.Find ("Player").GetComponent<PlayerController> ();
+			} catch { }
 		}
 
 		void Start() {
@@ -166,7 +169,7 @@ namespace SanAndreasUnity.Behaviours.World
 			if (!Loader.HasLoaded)
 				return;
 
-			if (_playerController.CursorLocked)
+			if ((_playerController == null) || (_playerController.CursorLocked))
 				return;
 
 			windowRect = GUILayout.Window (windowID, windowRect, showWindow, "World statistics");

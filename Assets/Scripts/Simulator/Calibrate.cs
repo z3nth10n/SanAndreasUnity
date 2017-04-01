@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
+/*
+ * Originally from:
+ * https://github.com/richardhannah/honours-project
+ * 
+ * More:
+ * http://wordpress.richardhannah.ninja/honours-project/2014/11/06/simulation-progress-update/
+ */
 using System.Collections;
 
-public class Calibrate : MonoBehaviour
-{
-
-
+namespace SanAndreasUnity.Simulator {
+	public class Calibrate : MonoBehaviour {
 		public Transform sensorModule;
 		public Engine engine1;
 		public Engine engine2;
@@ -13,62 +18,43 @@ public class Calibrate : MonoBehaviour
 		private bool CalibLiftOffToggle;
 		private GameObject quad;
 
+		void Start () {
+			CalibLiftOffToggle = false;
+			quad = GameObject.Find ("QuadCopter");
+		}
 
-		// Use this for initialization
-		void Start ()
-		{
+		void FixedUpdate () {
+			if (CalibLiftOffToggle == true) {
+				engine1.IncreaseThrottle ();
+				engine2.IncreaseThrottle ();
+				engine3.IncreaseThrottle ();
+				engine4.IncreaseThrottle ();
+
+				if (sensorModule.parent.GetComponent<Rigidbody>().velocity.y > 0.01) {
+					Debug.Log (engine1.getThrottle ());
+					CalibLiftOffToggle = false;
+					CutEngines ();
+				}
+
+			} else {
+				CalibLiftOffToggle = false;			
+				//CutEngines ();
+			}
+		}
+
+		public void CalibLiftOff () {
+			if (CalibLiftOffToggle == false) {
+				CalibLiftOffToggle = true;
+			} else {
 				CalibLiftOffToggle = false;
-		quad = GameObject.Find ("QuadCopter");
-	
-		}
-	
-		// Update is called once per frame
-		void Update ()
-		{
-	
+			}
 		}
 
-		void FixedUpdate ()
-		{
-
-				if (CalibLiftOffToggle == true) {
-
-
-						engine1.IncreaseThrottle ();
-						engine2.IncreaseThrottle ();
-						engine3.IncreaseThrottle ();
-						engine4.IncreaseThrottle ();
-
-						if (sensorModule.parent.rigidbody.velocity.y > 0.01) {
-								Debug.Log (engine1.getThrottle ());
-								CalibLiftOffToggle = false;
-								CutEngines ();
-						}
-
-				} else {
-						CalibLiftOffToggle = false;			
-						//CutEngines ();
-				}
-
-
+		private void CutEngines () {
+			engine1.CutEngine ();
+			engine2.CutEngine ();
+			engine3.CutEngine ();
+			engine4.CutEngine ();
 		}
-
-		public void CalibLiftOff ()
-		{
-		
-				if (CalibLiftOffToggle == false) {
-						CalibLiftOffToggle = true;
-				} else {
-						CalibLiftOffToggle = false;
-				}
-
-		}
-
-		private void CutEngines ()
-		{
-				engine1.CutEngine ();
-				engine2.CutEngine ();
-				engine3.CutEngine ();
-				engine4.CutEngine ();
-		}
+	}
 }
