@@ -9,8 +9,6 @@ namespace SanAndreasUnity.Utilities {
 		private static float fpsGreen = 50.0f;
 		private static float fpsYellow = 23.0f;
 		private float fpsDeltaTime = 0.0f;
-		private float[] fpsHistory = new float[fpsTextureWidth];
-		private int fpsIndex = 0;
 		private GUIGraph fpsGraph;
 
 		void Start () {
@@ -35,17 +33,8 @@ namespace SanAndreasUnity.Utilities {
 			GUILayout.Label (string.Format("{0:0.}fps ({1:0.0}ms)", fps, msec));
 			GUILayout.EndArea ();
 
-			// Append to history storage
-			fpsHistory [fpsIndex] = fps;
-
 			// Show FPS history
-			fpsGraph.draw(new Vector2(5, Screen.height - fpsTextureHeight - 5), fpsHistory, fpsIndex);
-
-			// Next entry in rolling history buffer
-			fpsIndex++;
-			if (fpsIndex >= fpsHistory.Length) {
-				fpsIndex = 0;
-			}
+			fpsGraph.draw(new Vector2(5, Screen.height - fpsTextureHeight - 5), fps);
 		}
 	}
 }
