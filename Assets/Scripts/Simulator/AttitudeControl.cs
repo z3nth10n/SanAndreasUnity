@@ -6,7 +6,7 @@
  * http://wordpress.richardhannah.ninja/honours-project/2014/11/06/simulation-progress-update/
  */
 using UnityEngine;
-using System.Collections;
+using SanAndreasUnity.Behaviours;
 
 namespace SanAndreasUnity.Simulator {
 	public class AttitudeControl : MonoBehaviour {
@@ -98,6 +98,8 @@ namespace SanAndreasUnity.Simulator {
 		}
 		
 		void FixedUpdate () {
+			if (!Loader.HasLoaded) return;
+
 			AttitudeStablise ();
 			AltitudeStablise ();
 			VelocityStablise ();

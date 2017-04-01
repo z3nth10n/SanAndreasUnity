@@ -6,8 +6,7 @@
  * http://wordpress.richardhannah.ninja/honours-project/2014/11/06/simulation-progress-update/
  */
 using UnityEngine;
-using System.Collections;
-using System;
+using SanAndreasUnity.Behaviours;
 
 namespace SanAndreasUnity.Simulator {
 	public class FlightControlScript : MonoBehaviour {
@@ -38,7 +37,7 @@ namespace SanAndreasUnity.Simulator {
 			angularVelocity = sensorModule.parent.GetComponent<Rigidbody>().angularVelocity;
 			sensitivity = 0.5f;
 			desiredAltitude = 0;
-			idleThrottle = 15.9f;
+			idleThrottle = 1.0f; //15.9f;
 			Idle ();
 
 			rollAngle = 0;
@@ -47,6 +46,8 @@ namespace SanAndreasUnity.Simulator {
 		}
 
 		void Update () {
+			if (!Loader.HasLoaded) return;
+			
 			//get readings from sensors
 			altitude = sensorModule.GetComponent<Altimeter> ().altitude;
 			currentRotation = sensorModule.GetComponent<RotationSensor> ().getRotation ();

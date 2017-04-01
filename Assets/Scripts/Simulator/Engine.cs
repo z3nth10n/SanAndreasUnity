@@ -11,15 +11,12 @@ using System;
 
 namespace SanAndreasUnity.Simulator {
 	public class Engine : MonoBehaviour {
-		public string engName;
-		public double idle;
 		public float maxPower;
 		public float throttle;
 		public int engNum;
 
 		void FixedUpdate () {
-			Vector3 force = transform.up * (maxPower * (throttle/100));
-			//Debug.Log(engName + ": " + (maxPower * (throttle/100)));
+			Vector3 force = transform.up * (maxPower * (throttle / 100));
 			GetComponent<Rigidbody>().AddForce (force);
 
 			Vector3 torque = new Vector3 ();
@@ -37,32 +34,33 @@ namespace SanAndreasUnity.Simulator {
 				break;
 
 			case 4:
-				torque = transform.right * (maxPower * (throttle / 100)* -1);
+				torque = transform.right * (maxPower * (throttle / 100) * -1);
 				break;
 			}
 
-			//Vector3 torque = transform.forward * (maxPower * (throttle / 10) * torqueDir);
 			GetComponent<Rigidbody>().AddForce (torque);
 		}
 
 		public void IncreaseThrottle () {
-			if (throttle < 100) {
-				throttle=throttle+0.1f;
+			if (throttle < 100.0f) {
+				throttle=throttle + 0.1f;
 			}
 		}
 		
 		public void DecreaseThrottle () {
-			if (throttle > 0) {
-				throttle=throttle-0.1f;
+			if (throttle > 0.0f) {
+				throttle = throttle - 0.1f;
+			} else {
+				throttle = 0.0f;
 			}
 		}
 
 		public void CutEngine() {
-			throttle = 0;
+			throttle = 0.0f;
 		}
 
 		public void SetThrottle(float value) {
-			if (value >= 0 && value <= 100) {
+			if ((value >= 0.0f) && (value <= 100.0f)) {
 				throttle = value;
 			}
 		}
