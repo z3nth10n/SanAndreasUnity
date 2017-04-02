@@ -15,11 +15,15 @@ namespace SanAndreasUnity.Simulator {
 
 		void Start () {
 			rb = this.transform.parent.GetComponent<Rigidbody> ();
-			currentRotationSpeed = rb.rotation * rb.angularVelocity;
+			currentRotationSpeed = this.transform.InverseTransformDirection(rb.angularVelocity);
+			currentRotationSpeed.x = -currentRotationSpeed.x;
+			currentRotationSpeed.y = -currentRotationSpeed.y;
 		}
 
 		void FixedUpdate () {
-			currentRotationSpeed = rb.rotation * rb.angularVelocity;
+			currentRotationSpeed = this.transform.InverseTransformDirection(rb.angularVelocity);
+			currentRotationSpeed.x = -currentRotationSpeed.x;
+			currentRotationSpeed.y = -currentRotationSpeed.y;
 		}
 
 		public Vector3 getRotationSpeed() {

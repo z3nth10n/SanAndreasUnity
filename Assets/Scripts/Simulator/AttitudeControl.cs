@@ -51,14 +51,14 @@ namespace SanAndreasUnity.Simulator {
 			integralY = 0.0f;
 			integralZ = 0.0f;
 
-			pGain = 0.5f;
-			iGain = 0.0f;
-			dGain = 0.0f;
+			pGain = 5.0f;
+			iGain = 0.001f;
+			dGain = 0.5f;
 
-			throtMax = 42.0f;
+			throtMax = 100.0f;
 			throtMin = 0.0f;
 
-			maxAngularSpeed = 5.0f;
+			maxAngularSpeed = 20.0f;
 
 			graphRotX = new GUIGraph (graphWidth, graphWidth, new Color (0.0f, 0.0f, 0.0f, 0.66f), new Color (1.0f, 1.0f, 1.0f, 1.0f), 100.0f, -100.0f);
 			graphRotY = new GUIGraph (graphWidth, graphWidth, new Color (0.0f, 0.0f, 0.0f, 0.66f), new Color (1.0f, 1.0f, 1.0f, 1.0f), 100.0f, -100.0f);
@@ -123,12 +123,13 @@ namespace SanAndreasUnity.Simulator {
 		void FixedUpdate () {
 			if (!Loader.HasLoaded) return;
 
-			float baseSpeed = (-Input.GetAxis ("Throttle") + 1.0f) / 2.0f * throtMax;
-			float targetPitch = -Input.GetAxis ("Pitch") * maxAngularSpeed;
+			float baseSpeed = (-((Mathf.Clamp(Input.GetAxis ("Throttle"), 0.2f, 0.8f) - 0.2f) * 1.667f) + 1.0f) / 2.0f * throtMax;
+			float targetPitch = Input.GetAxis ("Pitch") * maxAngularSpeed;
 			float targetRoll = Input.GetAxis ("Roll") * maxAngularSpeed;
-			float targetYaw = -Input.GetAxis ("Yaw") * maxAngularSpeed;
+			float targetYaw = Input.GetAxis ("Yaw") * maxAngularSpeed;
 			Vector3 targetSpeed = new Vector3 (targetPitch, targetYaw, targetRoll);
 
+			/*
 			if ((Input.GetAxis ("Throttle") == Input.GetAxis ("Roll"))
 					&& (Input.GetAxis ("Roll") == Input.GetAxis ("Pitch"))
 					&& (Input.GetAxis ("Pitch") == Input.GetAxis ("Yaw"))
@@ -136,6 +137,7 @@ namespace SanAndreasUnity.Simulator {
 				// Assume no input is given at all, so don't apply throttle
 				baseSpeed = 0.0f;
 			}
+			*/
 
 			Vector3 currentSpeed = this.transform.GetComponent<RotationSensor> ().getRotationSpeed ();
 			Vector3 errorSpeed = targetSpeed - currentSpeed;
@@ -156,10 +158,10 @@ namespace SanAndreasUnity.Simulator {
 			pidOutputY = errorSpeed.y * pGain + integralY * iGain + derivY * dGain;
 			pidOutputZ = errorSpeed.z * pGain + integralZ * iGain + derivZ * dGain;
 
-			m1 = Mathf.Clamp ((baseSpeed + pidOutputZ + pidOutputY), throtMin, throtMax);
-			m2 = Mathf.Clamp ((baseSpeed + pidOutputX - pidOutputY), throtMin, throtMax);
-			m3 = Mathf.Clamp ((baseSpeed - pidOutputZ + pidOutputY), throtMin, throtMax);
-			m4 = Mathf.Clamp ((baseSpeed - pidOutputX - pidOutputY), throtMin, throtMax);
+			m1 = Mathf.Clamp ((baseSpeed + pidOutputX - pidOutputY), throtMin, throtMax);
+			m2 = Mathf.Clamp ((baseSpeed + pidOutputZ + pidOutputY), throtMin, throtMax);
+			m3 = Mathf.Clamp ((baseSpeed - pidOutputX - pidOutputY), throtMin, throtMax);
+			m4 = Mathf.Clamp ((baseSpeed - pidOutputZ + pidOutputY), throtMin, throtMax);
 
 			engine1.SetThrottle (m1);
 			engine2.SetThrottle (m2);

@@ -32,7 +32,7 @@ namespace SanAndreasUnity.Utilities {
 		void FixedUpdate () {
 			// Physics FPS counting
 			if (countPhysics)
-				fpsDeltaTime += (Time.deltaTime - fpsDeltaTime) * 0.1f;
+				fpsDeltaTime += (Time.fixedDeltaTime - fpsDeltaTime) * 0.1f;
 		}
 
 		void OnGUI () {
