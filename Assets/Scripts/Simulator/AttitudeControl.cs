@@ -123,7 +123,10 @@ namespace SanAndreasUnity.Simulator {
 		void FixedUpdate () {
 			if (!Loader.HasLoaded) return;
 
-			float baseSpeed = (-((Mathf.Clamp(Input.GetAxis ("Throttle"), 0.2f, 0.8f) - 0.2f) * 1.667f) + 1.0f) / 2.0f * throtMax;
+			float baseSpeed = (-Input.GetAxis ("Throttle") + 1.0f) / 2.0f;
+			baseSpeed -= 0.2f;
+			if (baseSpeed < 0.0f) baseSpeed = 0.0f;
+			baseSpeed *= throtMax;
 			float targetPitch = Input.GetAxis ("Pitch") * maxAngularSpeed;
 			float targetRoll = Input.GetAxis ("Roll") * maxAngularSpeed;
 			float targetYaw = Input.GetAxis ("Yaw") * maxAngularSpeed;

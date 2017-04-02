@@ -17,7 +17,7 @@ namespace SanAndreasUnity.Simulator {
 				altitude = hit.distance;
 			}
 
-			Debug.DrawLine(transform.position, -Vector3.up, Color.red);
+			Debug.DrawRay(transform.position, -Vector3.up, Color.red);
 		}
 	}
 }
