@@ -55,14 +55,14 @@ namespace SanAndreasUnity.Simulator {
 			iGain = 0.0f;
 			dGain = 0.0f;
 
-			throtMax = 60.0f;
+			throtMax = 42.0f;
 			throtMin = 0.0f;
 
 			maxAngularSpeed = 5.0f;
 
-			graphRotX = new GUIGraph (graphWidth, graphWidth, new Color (0.0f, 0.0f, 0.0f, 0.66f), new Color (1.0f, 1.0f, 1.0f, 1.0f), 10.0f, -10.0f);
-			graphRotY = new GUIGraph (graphWidth, graphWidth, new Color (0.0f, 0.0f, 0.0f, 0.66f), new Color (1.0f, 1.0f, 1.0f, 1.0f), 10.0f, -10.0f);
-			graphRotZ = new GUIGraph (graphWidth, graphWidth, new Color (0.0f, 0.0f, 0.0f, 0.66f), new Color (1.0f, 1.0f, 1.0f, 1.0f), 10.0f, -10.0f);
+			graphRotX = new GUIGraph (graphWidth, graphWidth, new Color (0.0f, 0.0f, 0.0f, 0.66f), new Color (1.0f, 1.0f, 1.0f, 1.0f), 100.0f, -100.0f);
+			graphRotY = new GUIGraph (graphWidth, graphWidth, new Color (0.0f, 0.0f, 0.0f, 0.66f), new Color (1.0f, 1.0f, 1.0f, 1.0f), 100.0f, -100.0f);
+			graphRotZ = new GUIGraph (graphWidth, graphWidth, new Color (0.0f, 0.0f, 0.0f, 0.66f), new Color (1.0f, 1.0f, 1.0f, 1.0f), 100.0f, -100.0f);
 
 			graphMotor1 = new GUIGraph (graphWidth, graphWidth, new Color (0.0f, 0.0f, 0.0f, 0.66f), new Color (1.0f, 1.0f, 1.0f, 1.0f), throtMax, throtMin);
 			graphMotor2 = new GUIGraph (graphWidth, graphWidth, new Color (0.0f, 0.0f, 0.0f, 0.66f), new Color (1.0f, 1.0f, 1.0f, 1.0f), throtMax, throtMin);

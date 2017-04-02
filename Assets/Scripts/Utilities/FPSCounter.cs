@@ -3,24 +3,36 @@ using SanAndreasUnity.Behaviours;
 
 namespace SanAndreasUnity.Utilities {
 	public class FPSCounter : MonoBehaviour {
-		private static int fpsTextureWidth = 75;
-		private static int fpsTextureHeight = 25;
-		private static float fpsMaximum = 60.0f;
-		private static float fpsGreen = 50.0f;
-		private static float fpsYellow = 23.0f;
 		private float fpsDeltaTime = 0.0f;
 		private GUIGraph fpsGraph;
 
+		public int textureWidth = 75;
+		public int textureHeight = 25;
+
+		public float screenPosX = 5;
+		public float screenPosY = 5;
+		public bool countPhysics = false;
+
+		public float maximum = 60.0f;
+		public float greenAbove = 50.0f;
+		public float yellowAbove = 23.0f;
+
 		void Start () {
-			//fpsTexture = new Texture2D (fpsTextureWidth, fpsTextureHeight, TextureFormat.RGBA32, false, true);
-			fpsGraph = new GUIGraph(fpsTextureWidth, fpsTextureHeight, new Color (0.0f, 0.0f, 0.0f, 0.66f), new Color (1.0f, 0.0f, 0.0f, 1.0f), fpsMaximum);
-			fpsGraph.addLimit (fpsGreen, new Color (0.0f, 1.0f, 0.0f, 1.0f));
-			fpsGraph.addLimit (fpsYellow, new Color (1.0f, 1.0f, 0.0f, 1.0f));
+			fpsGraph = new GUIGraph(textureWidth, textureHeight, new Color (0.0f, 0.0f, 0.0f, 0.66f), new Color (1.0f, 0.0f, 0.0f, 1.0f), maximum);
+			fpsGraph.addLimit (greenAbove, new Color (0.0f, 1.0f, 0.0f, 1.0f));
+			fpsGraph.addLimit (yellowAbove, new Color (1.0f, 1.0f, 0.0f, 1.0f));
 		}
 
 		void Update () {
 			// FPS counting
-			fpsDeltaTime += (Time.deltaTime - fpsDeltaTime) * 0.1f;
+			if (!countPhysics)
+				fpsDeltaTime += (Time.deltaTime - fpsDeltaTime) * 0.1f;
+		}
+
+		void FixedUpdate () {
+			// Physics FPS counting
+			if (countPhysics)
+				fpsDeltaTime += (Time.deltaTime - fpsDeltaTime) * 0.1f;
 		}
 
 		void OnGUI () {
@@ -29,12 +41,16 @@ namespace SanAndreasUnity.Utilities {
 			// Show FPS counter
 			float msec = fpsDeltaTime * 1000.0f;
 			float fps = 1.0f / fpsDeltaTime;
-			GUILayout.BeginArea (new Rect (15 + fpsTextureWidth, Screen.height - 25, 100, 25));
+			Rect r = new Rect (10 + textureWidth + screenPosX, screenPosY - 10, 100, 25);
+			if (screenPosY < 0) r.y = Screen.height + screenPosY - 20;
+			GUILayout.BeginArea (r);
 			GUILayout.Label (string.Format("{0:0.}fps ({1:0.0}ms)", fps, msec));
 			GUILayout.EndArea ();
 
 			// Show FPS history
-			fpsGraph.draw(new Vector2(5, Screen.height - fpsTextureHeight - 5), fps);
+			Vector2 pos = new Vector2(screenPosX, screenPosY);
+			if (screenPosY < 0) pos.y = Screen.height - textureHeight + screenPosY;
+			fpsGraph.draw(pos, fps);
 		}
 	}
 }
