@@ -6,6 +6,17 @@ namespace SanAndreasUnity.Simulator {
 		private bool isEnabled = false;
 		GameObject quad;
 
+		void OnGUI () {
+			if (!Loader.HasLoaded) return;
+
+			GUILayout.BeginArea (new Rect (Screen.width - 90, 10, 80, 40));
+			if (GUILayout.Button ("Reset Quad")) {
+				quad.transform.position = new Vector3 (0, 10, 0);
+				quad.transform.rotation = new Quaternion (0, 0, 0, 1);
+			}
+			GUILayout.EndArea ();
+		}
+
 		void Update () {
 			if (!Loader.HasLoaded) return;
 			
@@ -14,9 +25,7 @@ namespace SanAndreasUnity.Simulator {
 
 				// Place copter above world and enable gravity (so it doesn't fall while loading)
 				quad = GameObject.Find ("QuadCopter");
-				Vector2 p = quad.transform.position;
-				p.y = 40.0f;
-				quad.transform.position = p;
+				quad.transform.position = new Vector3 (0, 10, 0);
 				quad.GetComponent<Rigidbody> ().useGravity = true;
 				Rigidbody[] rbs = quad.GetComponentsInChildren<Rigidbody> ();
 				foreach (Rigidbody rb in rbs) {

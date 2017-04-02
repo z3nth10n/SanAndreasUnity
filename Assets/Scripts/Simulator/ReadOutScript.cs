@@ -53,6 +53,7 @@ namespace SanAndreasUnity.Simulator {
 			angularVelocity = sensorModule.parent.GetComponent<Rigidbody>().angularVelocity;
 		}
 
+		/*
 		void OnGUI () {
 			// switch to test object
 			if (GUI.Button (new Rect (10, 120, 100, 30), "Switch Target")) {
@@ -291,7 +292,7 @@ namespace SanAndreasUnity.Simulator {
 			if (GUI.Button (new Rect (960, 460, 20, 20), "-")) {
 				GameObject.Find ("FlightController").GetComponent<AttitudeControl> ().aDGain -= 1f;
 			}
-
+*/
 			/*
 			//Companion Cube Readouts
 			GameObject compCube = GameObject.Find ("CompanionCube");
@@ -309,6 +310,8 @@ namespace SanAndreasUnity.Simulator {
 			GUI.Label (new Rect (800, 70, 100, 20), "");
 			GUI.Label (new Rect (800, 90, 100, 20), "");
 			*/
+		/*
 		}
+	*/
 	}
 }

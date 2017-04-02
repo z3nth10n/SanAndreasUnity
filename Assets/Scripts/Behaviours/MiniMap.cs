@@ -2,7 +2,6 @@
 using SanAndreasUnity.Importing.Conversion;
 
 namespace SanAndreasUnity.Behaviours {
-	[RequireComponent(typeof(Player))]
 	public class MiniMap : MonoBehaviour {
 		const int tileEdge = 12; // width/height of map in tiles
 		const int tileCount = tileEdge * tileEdge; // number of tiles
@@ -70,19 +69,7 @@ namespace SanAndreasUnity.Behaviours {
 			return new Vector2 (pos.x % texSize, pos.y % texSize);
 		}
 
-		// --------------------------------
-
-		#region Private fields
-		private Player player;
-		private PlayerController playerController;
-		#endregion
-
-		void Awake () {
-			player = GetComponent<Player>();
-			playerController = GetComponent<PlayerController>();
-		}
-
-		private void drawMapWindow(Vector2 screenPos, Vector2 mapPos) {
+		private static void drawMapWindow(Vector2 screenPos, Vector2 mapPos, float angle) {
 			// Draw current map tile
 			Vector2 pxPos = coordinatesWorldToPixel (mapPos);
 			drawTilePart (coordinatesToTileNumber (pxPos), screenPos, new Vector2 (0, 0), new Vector2 (texSize, texSize));
@@ -90,7 +77,7 @@ namespace SanAndreasUnity.Behaviours {
 			// Draw player blip
 			Vector2 tilePos = coordinatesInTile (pxPos);
 			Matrix4x4 matrixBackup = GUI.matrix;
-			GUIUtility.RotateAroundPivot(player.transform.rotation.eulerAngles.y, new Vector2 (screenPos.x + tilePos.x, screenPos.y + tilePos.y));
+			GUIUtility.RotateAroundPivot(angle, new Vector2 (screenPos.x + tilePos.x, screenPos.y + tilePos.y));
 			drawTexturePart (playerBlip, new Vector2 (screenPos.x + tilePos.x - (playerBlip.width / 2), screenPos.y + tilePos.y - (playerBlip.height / 8)), new Vector2 (0, 0), new Vector2 (playerBlip.width, playerBlip.height));
 			GUI.matrix = matrixBackup;
 
@@ -98,13 +85,31 @@ namespace SanAndreasUnity.Behaviours {
 			drawTexturePart (northBlip, new Vector2 (screenPos.x + ((texSize - northBlip.width) / 2), screenPos.y - (northBlip.height / 2)), new Vector2 (0, 0), new Vector2 (northBlip.width, northBlip.height));
 		}
 
+		// --------------------------------
+
+		private Player player = null;
+		private PlayerController playerController = null;
+
+		void Awake () {
+			try {
+				player = GetComponent<Player>();
+				playerController = GetComponent<PlayerController>();
+			} catch { }
+		}
+
 		void OnGUI() {
 			if (!Loader.HasLoaded) return;
+
+			if ((player == null) || (playerController == null)) {
+				drawMapWindow (new Vector2 (Screen.width - texSize - 10, Screen.height - texSize - 10), new Vector2 (this.transform.position.x + (mapEdge / 2), mapEdge - (this.transform.position.z + (mapEdge / 2))), this.transform.rotation.eulerAngles.y);
+				return;
+			}
+			
 			if (!playerController.CursorLocked) return;
 
 			// Player coordinates on map, (0; 0) moved from center to top-left
 			Vector2 pos = new Vector2 (player.transform.position.x + (mapEdge / 2), mapEdge - (player.transform.position.z + (mapEdge / 2)));
-			drawMapWindow (new Vector2 (10, 10), pos);
+			drawMapWindow (new Vector2 (10, 10), pos, player.transform.rotation.eulerAngles.y);
 		}
 	}
 }

@@ -10,18 +10,20 @@ using System.Collections;
 
 namespace SanAndreasUnity.Simulator {
 	public class RotationSensor : MonoBehaviour {
-		private Quaternion currentRotation;
+		private Vector3 currentRotationSpeed;
+		private Rigidbody rb;
 
 		void Start () {
-			currentRotation = this.transform.parent.GetComponent<Rigidbody>().rotation;
+			rb = this.transform.parent.GetComponent<Rigidbody> ();
+			currentRotationSpeed = rb.rotation * rb.angularVelocity;
 		}
 
-		void Update () {
-			currentRotation = this.transform.parent.GetComponent<Rigidbody>().rotation;
+		void FixedUpdate () {
+			currentRotationSpeed = rb.rotation * rb.angularVelocity;
 		}
 
-		public Quaternion getRotation() {
-			return currentRotation;
+		public Vector3 getRotationSpeed() {
+			return currentRotationSpeed;
 		}
 	}
 }
