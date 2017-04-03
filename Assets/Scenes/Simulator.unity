@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbc9e96b83742472da9390932727d770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPower: 500
+  maxPower: 400
   throttle: 0
   engNum: 2
 --- !u!1 &336028274
@@ -417,9 +417,9 @@ MonoBehaviour:
   screenPosX: 200
   screenPosY: -5
   countPhysics: 1
-  maximum: 400
-  greenAbove: 200
-  yellowAbove: 100
+  maximum: 70
+  greenAbove: 59
+  yellowAbove: 40
 --- !u!1 &843731805
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,7 +514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbc9e96b83742472da9390932727d770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPower: 500
+  maxPower: 400
   throttle: 0
   engNum: 3
 --- !u!1 &1074960341
@@ -861,7 +861,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbc9e96b83742472da9390932727d770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPower: 500
+  maxPower: 400
   throttle: 0
   engNum: 4
 --- !u!1001 &1761733696
@@ -1008,6 +1008,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbc9e96b83742472da9390932727d770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPower: 500
+  maxPower: 400
   throttle: 0
   engNum: 1

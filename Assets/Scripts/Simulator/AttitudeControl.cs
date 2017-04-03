@@ -51,9 +51,9 @@ namespace SanAndreasUnity.Simulator {
 			integralY = 0.0f;
 			integralZ = 0.0f;
 
-			pGain = 5.0f;
-			iGain = 0.001f;
-			dGain = 0.5f;
+			pGain = 0.5f;
+			iGain = 0.025f;
+			dGain = 0.1f;
 
 			throtMax = 100.0f;
 			throtMin = 0.0f;
@@ -146,9 +146,9 @@ namespace SanAndreasUnity.Simulator {
 			Vector3 errorSpeed = targetSpeed - currentSpeed;
 
 			//calculate integrals
-			integralX += errorSpeed.x * Time.deltaTime;
-			integralY += errorSpeed.y * Time.deltaTime;
-			integralZ += errorSpeed.z * Time.deltaTime;
+			integralX += errorSpeed.x * Time.fixedDeltaTime;
+			integralY += errorSpeed.y * Time.fixedDeltaTime;
+			integralZ += errorSpeed.z * Time.fixedDeltaTime;
 
 			//calculate derivatives
 			float derivX = (errorSpeed.x - lastError.x);
