@@ -6,6 +6,9 @@ namespace SanAndreasUnity.Simulator {
 		private bool isEnabled = false;
 		GameObject quad;
 
+		private static float maxVelocity = 240.0f * 0.277f;
+		private float maxVelocitySquared = maxVelocity * maxVelocity;
+
 		void OnGUI () {
 			if (!Loader.HasLoaded) return;
 
@@ -13,8 +16,21 @@ namespace SanAndreasUnity.Simulator {
 			if (GUILayout.Button ("Reset Quad")) {
 				quad.transform.position = new Vector3 (0, 5, 0);
 				quad.transform.rotation = new Quaternion (0, 0, 0, 1);
+				quad.GetComponent<Rigidbody> ().velocity = Vector3.zero;
+				quad.GetComponent<Rigidbody> ().angularVelocity = Vector3.zero;
+				quad.GetComponentInChildren<AttitudeControl> ().ResetPID ();
 			}
 			GUILayout.EndArea ();
+		}
+
+		void FixedUpdate () {
+			if (!Loader.HasLoaded) return;
+
+			// Limit top-speed of quadcopter
+			Rigidbody rb = quad.GetComponent<Rigidbody> ();
+			if (rb.velocity.sqrMagnitude > maxVelocitySquared) {
+				rb.velocity = rb.velocity.normalized * maxVelocity;
+			}
 		}
 
 		void Update () {
@@ -27,10 +43,6 @@ namespace SanAndreasUnity.Simulator {
 				quad = GameObject.Find ("QuadCopter");
 				quad.transform.position = new Vector3 (0, 5, 0);
 				quad.GetComponent<Rigidbody> ().useGravity = true;
-				Rigidbody[] rbs = quad.GetComponentsInChildren<Rigidbody> ();
-				foreach (Rigidbody rb in rbs) {
-					rb.useGravity = true;
-				}
 			}
 
 			// Reset to a valid (and solid!) start position when falling below the world

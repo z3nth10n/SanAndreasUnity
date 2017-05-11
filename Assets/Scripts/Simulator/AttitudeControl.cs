@@ -20,6 +20,7 @@ namespace SanAndreasUnity.Simulator {
 		public float throtMax;
 		public float throtMin;
 		public float maxAngularSpeed;
+		public float additionalGravity;
 
 		// tunings
 		public float pGain; // the proportional gain
@@ -44,21 +45,26 @@ namespace SanAndreasUnity.Simulator {
 		private float pidOutputY;
 		private float pidOutputZ;
 
-		void Start () {
+		public void ResetPID() {
 			lastError = new Vector3 (0, 0, 0);
 
 			integralX = 0.0f;
 			integralY = 0.0f;
 			integralZ = 0.0f;
+		}
 
-			pGain = 0.5f;
-			iGain = 0.025f;
+		void Start () {
+			pGain = 2.5f;
+			iGain = 0.25f;
 			dGain = 0.1f;
 
 			throtMax = 100.0f;
 			throtMin = 0.0f;
 
-			maxAngularSpeed = 20.0f;
+			maxAngularSpeed = 23.0f;
+			additionalGravity = 9.81f;
+
+			ResetPID ();
 
 			graphRotX = new GUIGraph (graphWidth, graphWidth, new Color (0.0f, 0.0f, 0.0f, 0.66f), new Color (1.0f, 1.0f, 1.0f, 1.0f), 100.0f, -100.0f);
 			graphRotY = new GUIGraph (graphWidth, graphWidth, new Color (0.0f, 0.0f, 0.0f, 0.66f), new Color (1.0f, 1.0f, 1.0f, 1.0f), 100.0f, -100.0f);

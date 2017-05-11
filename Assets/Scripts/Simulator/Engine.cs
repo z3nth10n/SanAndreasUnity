@@ -15,34 +15,49 @@ namespace SanAndreasUnity.Simulator {
 		public float throttle;
 		public int engNum;
 
-		void FixedUpdate () {
-			float power = maxPower * (throttle / 100);
+		private Vector3 getForce () {
+			float power = maxPower * (throttle / 100.0f);
 			Vector3 force = transform.up * power;
+			return force * Time.fixedDeltaTime;
+		}
+
+		private Vector3 getTorque () {
+			float power = maxPower * (throttle / 100.0f);
 
 			Vector3 torque = new Vector3 ();
 			switch (engNum) {
-				case 1:
-					torque = transform.right * power;
-					break;
+			case 1:
+			case 3:
+				torque = transform.up * power;
+				break;
 
-				case 2:
-					torque = transform.forward * power;
-					break;
-
-				case 3:
-					torque = transform.right * -power;
-					break;
-
-				case 4:
-					torque = transform.forward * -power;
-					break;
+			case 2:
+			case 4:
+				torque = transform.up * -power;
+				break;
 			}
+			return torque * Time.fixedDeltaTime * 0.1f;
+		}
 
-			//Debug.DrawRay(transform.position, force * Time.fixedDeltaTime, Color.green, 0.1f);
-			//Debug.DrawRay(transform.position, torque * Time.fixedDeltaTime / 2.5f, Color.red, 0.1f);
+	#if UNITY_EDITOR
+		void Update () {
+			Vector3 force = getForce ();
+			Debug.DrawRay(transform.position, force, Color.green, 0.5f);
+		}
+	#endif
 
-			transform.parent.GetComponent<Rigidbody> ().AddForceAtPosition (force * Time.fixedDeltaTime, transform.position);
-			transform.parent.GetComponent<Rigidbody> ().AddForceAtPosition (torque * Time.fixedDeltaTime / 2.5f, transform.position);
+		void FixedUpdate () {
+			Vector3 force = getForce ();
+			Vector3 torque = getTorque ();
+
+			Rigidbody rb = transform.parent.GetComponent<Rigidbody> ();
+			rb.AddForceAtPosition (force, transform.position);
+			rb.AddTorque (torque);
+
+			if (rb.useGravity) {
+				Vector3 gravity = new Vector3 (0.0f, -9.81f * transform.parent.GetComponentInChildren<AttitudeControl> ().additionalGravity * Time.fixedDeltaTime, 0.0f);
+				rb.AddForceAtPosition (gravity, transform.position);
+			}
 		}
 
 		public void SetThrottle (float value) {
