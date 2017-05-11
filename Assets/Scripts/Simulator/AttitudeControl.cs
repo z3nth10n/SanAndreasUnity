@@ -61,7 +61,7 @@ namespace SanAndreasUnity.Simulator {
 			throtMax = 100.0f;
 			throtMin = 0.0f;
 
-			maxAngularSpeed = 23.0f;
+			maxAngularSpeed = 66.0f;
 			additionalGravity = 9.81f;
 
 			ResetPID ();
@@ -106,17 +106,17 @@ namespace SanAndreasUnity.Simulator {
 			GUILayout.BeginArea (new Rect (10, 10, 100, 200));
 			GUILayout.BeginHorizontal ();
 			GUILayout.Label ("P:", style);
-			GUILayout.HorizontalSlider (-Input.GetAxis ("Pitch"), -1.0F, 1.0F);
+			GUILayout.HorizontalSlider (-getAxis ("Pitch"), -1.0F, 1.0F);
 			GUILayout.EndHorizontal ();
 
 			GUILayout.BeginHorizontal ();
 			GUILayout.Label ("R:", style);
-			GUILayout.HorizontalSlider (-Input.GetAxis ("Roll"), -1.0F, 1.0F);
+			GUILayout.HorizontalSlider (-getAxis ("Roll"), -1.0F, 1.0F);
 			GUILayout.EndHorizontal ();
 
 			GUILayout.BeginHorizontal ();
 			GUILayout.Label ("Y:", style);
-			GUILayout.HorizontalSlider (-Input.GetAxis ("Yaw"), -1.0F, 1.0F);
+			GUILayout.HorizontalSlider (-getAxis ("Yaw"), -1.0F, 1.0F);
 			GUILayout.EndHorizontal ();
 
 			GUILayout.BeginHorizontal ();
@@ -125,7 +125,17 @@ namespace SanAndreasUnity.Simulator {
 			GUILayout.EndHorizontal ();
 			GUILayout.EndArea ();
 		}
-		
+
+		private float getAxis(string s) {
+			// Linear --> No expo
+			// return Input.GetAxis (s);
+
+			// Squared curve --> Slight expo
+			float f = Input.GetAxis (s) * 100.0f;
+			float v = (f * f) / (10.0f * 1000.0f);
+			return (f < 0.0f) ? -v : v;
+		}
+
 		void FixedUpdate () {
 			if (!Loader.HasLoaded) return;
 
@@ -133,9 +143,9 @@ namespace SanAndreasUnity.Simulator {
 			baseSpeed -= 0.2f;
 			if (baseSpeed < 0.0f) baseSpeed = 0.0f;
 			baseSpeed *= throtMax;
-			float targetPitch = Input.GetAxis ("Pitch") * maxAngularSpeed;
-			float targetRoll = Input.GetAxis ("Roll") * maxAngularSpeed;
-			float targetYaw = Input.GetAxis ("Yaw") * maxAngularSpeed;
+			float targetPitch = getAxis ("Pitch") * maxAngularSpeed;
+			float targetRoll = getAxis ("Roll") * maxAngularSpeed;
+			float targetYaw = getAxis ("Yaw") * maxAngularSpeed;
 			Vector3 targetSpeed = new Vector3 (targetPitch, targetYaw, targetRoll);
 
 			/*

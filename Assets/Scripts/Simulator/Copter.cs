@@ -10,7 +10,7 @@ namespace SanAndreasUnity.Simulator {
 		private float maxVelocitySquared = maxVelocity * maxVelocity;
 
 		private float initialHeight = 10.0f;
-		private float maxScanHeight = 2000.0f;
+		private float maxScanHeight = 100.0f * 1000.0f;
 
 		void OnGUI () {
 			if (!Loader.HasLoaded) return;
