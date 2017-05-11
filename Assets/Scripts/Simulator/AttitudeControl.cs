@@ -55,8 +55,8 @@ namespace SanAndreasUnity.Simulator {
 
 		void Start () {
 			pGain = 2.5f;
-			iGain = 0.25f;
-			dGain = 0.1f;
+			iGain = 0.0f;
+			dGain = 0.0f;
 
 			throtMax = 100.0f;
 			throtMin = 0.0f;

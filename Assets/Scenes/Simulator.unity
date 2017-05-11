@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 235313756}
   - component: {fileID: 235313755}
   - component: {fileID: 235313758}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Engine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 336028276}
   - component: {fileID: 336028277}
   - component: {fileID: 336028278}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: QuadCopter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,7 +244,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 336028274}
   serializedVersion: 2
-  m_Mass: 0.042
+  m_Mass: 0.075
   m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 0
@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 527005388}
   - component: {fileID: 527005390}
   - component: {fileID: 527005389}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: FlightController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 611252104}
   - component: {fileID: 611252105}
   - component: {fileID: 611252106}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -433,7 +433,7 @@ GameObject:
   - component: {fileID: 843731810}
   - component: {fileID: 843731809}
   - component: {fileID: 843731812}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Engine3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -530,7 +530,7 @@ GameObject:
   - component: {fileID: 1074960344}
   - component: {fileID: 1074960343}
   - component: {fileID: 1074960342}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -574,8 +574,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.44
-  far clip plane: 1000
+  near clip plane: 0.042
+  far clip plane: 2000
   field of view: 90
   orthographic: 0
   orthographic size: 5
@@ -616,7 +616,7 @@ GameObject:
   - component: {fileID: 1078675995}
   - component: {fileID: 1078675994}
   - component: {fileID: 1078675993}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MainBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -697,7 +697,7 @@ GameObject:
   - component: {fileID: 1100661143}
   - component: {fileID: 1100661142}
   - component: {fileID: 1100661141}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -710,14 +710,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1100661137}
-  m_LocalRotation: {x: -0.21643952, y: 0, z: 0, w: 0.97629607}
+  m_LocalRotation: {x: -0.13052624, y: 0, z: 0, w: 0.9914449}
   m_LocalPosition: {x: 0, y: 0.005, z: 0.012}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children:
   - {fileID: 1074960346}
   m_Father: {fileID: 336028275}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: -25, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -15, y: 0, z: 0}
 --- !u!23 &1100661141
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -780,7 +780,7 @@ GameObject:
   - component: {fileID: 1239741129}
   - component: {fileID: 1239741128}
   - component: {fileID: 1239741131}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Engine4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -927,7 +927,7 @@ GameObject:
   - component: {fileID: 1857481836}
   - component: {fileID: 1857481835}
   - component: {fileID: 1857481838}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Engine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
