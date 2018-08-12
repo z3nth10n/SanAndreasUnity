@@ -2,6 +2,8 @@
 
 public class AnimationList
 {
+    public static Dictionary<string, List<string>> CurAnims { get { return animList; } }
+
     private static Dictionary<string, List<string>> animList = new Dictionary<string, List<string>>()
     {
         {

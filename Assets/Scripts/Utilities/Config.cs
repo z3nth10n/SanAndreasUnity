@@ -12,8 +12,9 @@ namespace SanAndreasUnity.Utilities
 {
     public static class Config
     {
-        public const string const_game_dir = "game_dir";
-
+        public const string const_game_dir = "game_dir",
+                            const_dev_profiles = "dev_profiles",
+                            const_active_dev_profile = "active_dev_profile";
 
         public static string FileName
         {
@@ -101,6 +102,10 @@ namespace SanAndreasUnity.Utilities
             if (key == "data_dir")
             {
                 subs = DataPath;
+            }
+            else if (key == "game_dir")
+            {
+                subs = ArchiveManager.GameDir;
             }
             else
             {
