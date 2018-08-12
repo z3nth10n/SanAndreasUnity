@@ -9,6 +9,7 @@
   "sv_name": "San Anreas Unity Server",
   "sv_max_connections": 32,
   "sv_port": 14242,
+  "game_dir" : "C:/Program Files (x86)/Rockstar Games/GTA San Andreas",
   "archive_paths": [
     "${game_dir}",
     "${game_dir}/models/gta3.img",
