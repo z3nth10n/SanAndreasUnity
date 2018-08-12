@@ -132,6 +132,10 @@ public enum AnimationGroups
     Wuzi
 }
 
+/// <summary>
+/// To use this simply call: PlayAnim(AnimationGroups.Something, AnimGroup<Number_That_Enum_Tooltip_Display>.Something);
+/// </summary>
+
 public class AnimationList
 {
     private static string[] animGroups = new string[]
@@ -269,6 +273,11 @@ public class AnimationList
     public string this[AnimationGroups group]
     {
         get { return animGroups[(int)group]; }
+    }
+
+    public string GetAnimGroup(AnimationGroups group)
+    {
+        return animGroups[(int)group];
     }
 
     public static Dictionary<AnimationGroups, List<string>> CurAnims { get { return animList; } }
