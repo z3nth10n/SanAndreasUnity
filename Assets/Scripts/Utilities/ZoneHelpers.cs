@@ -671,7 +671,7 @@ public static class ZHelpers
 
                 if (debugging)
                 {
-                    logger.AppendFormat("[{0}] Cut ellapsed: {1}", zone.name, (sw.ElapsedMilliseconds - lastSw) + " ms");
+                    logger.AppendFormat("[{0}] Cut ellapsed: {1}", zone.name, (lastSw - sw.ElapsedMilliseconds) + " ms");
                     logger.AppendLine();
                     lastSw = sw.ElapsedMilliseconds;
                 }
