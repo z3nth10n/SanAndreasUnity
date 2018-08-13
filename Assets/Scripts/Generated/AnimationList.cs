@@ -1845,7 +1845,7 @@ namespace SanAndreasUnity.Generated
                     new AnimFlag("car_lb_pro"),
                     new AnimFlag("car_lb_weak"),
                     new AnimFlag("car_ljackedlhs"),
-                    new AnimFlag("car_ljackedrhs"),
+                    new AnimFlag("car_ljackedrhs", true),
                     new AnimFlag("car_lshuffle_rhs"),
                     new AnimFlag("car_lsit"),
                     new AnimFlag("car_open_lhs"),

@@ -120,12 +120,11 @@ namespace SanAndreasUnity.Behaviours
 
         private void Update()
         {
-
             if (Loader.HasLoaded)
             {
                 if (!loadedModelOnStartup)
                 {
-                    _player.OnSpawn();
+                    if(_player != null) _player.OnSpawn();
 
                     // load model on startup
                     Debug.Log("Loading pedestrian model after startup.");
@@ -158,7 +157,6 @@ namespace SanAndreasUnity.Behaviours
 
         public void Load(int id)
         {
-            
 			var newDefinition = Item.GetDefinition<PedestrianDef>(id);
 			if (null == newDefinition)
 				return;
