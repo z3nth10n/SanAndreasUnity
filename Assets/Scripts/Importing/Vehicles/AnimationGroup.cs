@@ -241,6 +241,10 @@ namespace SanAndreasUnity.Importing.Animation
 			this.usesAnimGroup = false;
 		}
 
+        public static AnimId Create(AnimationGroups animGroup, string anim)
+        {
+            return new AnimId(AnimationList.GetAnimGroupName(animGroup), anim);
+        }
 	}
 
     public class AnimationGroup

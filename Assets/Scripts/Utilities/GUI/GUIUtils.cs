@@ -7,6 +7,7 @@ namespace SanAndreasUnity.Utilities
 
     public static class GUIUtils
     {
+        private static Dictionary<Color, Texture2D> dictionary = new Dictionary<Color, Texture2D>();
 
 		private	static	GUIStyle	styleWithBackground = new GUIStyle ();
 
@@ -229,6 +230,30 @@ namespace SanAndreasUnity.Utilities
 			int numPages = Mathf.CeilToInt (totalNumItems / (float) numItemsPerPage);
 			return DrawPagedViewNumbers (rect, currentPage, numPages);
 		}
+
+        public static Texture2D ToTexture(this Color32 c)
+        {
+            return new Color(c.r / 255f, c.g / 255f, c.b / 255f).ToTexture();
+        }
+
+        public static Texture2D ToTexture(this Color color, bool store = false)
+        {
+            Texture2D texture = null;
+
+            if (!dictionary.ContainsKey(color) || !store)
+            {
+                texture = new Texture2D(1, 1);
+                texture.SetPixel(0, 0, color);
+                texture.Apply();
+
+                if(store) dictionary.Add(color, texture);
+            }
+
+            if (store)
+                return dictionary[color];
+            else
+                return texture;
+        }
 
     }
 }

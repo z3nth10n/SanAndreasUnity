@@ -243,6 +243,10 @@ namespace SanAndreasUnity.Behaviours
 
 		}
 
+        public AnimationState PlayAnim(AnimationGroups animGroup, string anim, PlayMode playMode = PlayMode.StopAll)
+        {
+            return PlayAnim(new AnimId(AnimationList.GetAnimGroupName(animGroup), anim), playMode);
+        }
 
 		public AnimationState PlayAnim (AnimId animId, PlayMode playMode = PlayMode.StopAll)
         {

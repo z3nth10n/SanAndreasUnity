@@ -17,7 +17,7 @@ namespace SanAndreasUnity.UI {
 
 
 
-		AnimationsWindow() {
+		public AnimationsWindow() {
 
 			// set default parameters
 

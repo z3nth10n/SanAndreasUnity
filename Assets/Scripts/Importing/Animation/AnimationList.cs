@@ -275,7 +275,7 @@ public class AnimationList
         get { return animGroups[(int)group]; }
     }
 
-    public string GetAnimGroup(AnimationGroups group)
+    public static string GetAnimGroupName(AnimationGroups group)
     {
         return animGroups[(int)group];
     }
