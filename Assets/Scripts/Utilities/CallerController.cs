@@ -1,6 +1,7 @@
 ﻿using SanAndreasUnity.Behaviours;
 using SanAndreasUnity.Utilities;
 using System.Collections;
+using System.IO;
 using UnityEngine;
 
 // This is used only for attached MonoBehaviour calls
@@ -39,9 +40,16 @@ public class CallerController : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
 
-        RagdollBuilder.ToRagdoll(ped.transform);
+        RagdollBuilder builder = RagdollBuilder.ToRagdoll(ped.transform);
 
         pedObj.GetComponent<Animation>().enabled = false;
+
+#if UNITY_EDITOR
+        GameObject Root = builder.pelvis.gameObject;
+        SkinnedMeshRenderer ren = Root.GetComponent<SkinnedMeshRenderer>();
+        AssetSaver.SaveMesh(ren.sharedMesh);
+        File.WriteAllBytes(Path.Combine(AssetSaver.SavePath, "player-tex.png"), ((Texture2D)ren.material.mainTexture).EncodeToPNG());
+#endif
     }
 
     public void OnLoaderFinished()
