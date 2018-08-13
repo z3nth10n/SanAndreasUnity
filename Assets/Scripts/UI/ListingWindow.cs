@@ -161,12 +161,12 @@ public class ListingWindow
                 switch(type)
                 {
                     case ListingType.Content:
-                        if (GUILayout.Button((resursive ? new string(' ', 5) : "") + title.text, style))
+                        if (GUILayout.Button((resursive ? new string(' ', 5) : "") + content.ToString(), style))
                             selectedTitle = title;
                         break;
 
                     case ListingType.Category:
-                        if (GUILayout.Button(title.text, style))
+                        if (GUILayout.Button(category.text, style))
                             selectedTitle = title;
 
                         Display(category.contents, e, ListingType.Content, true);
@@ -216,6 +216,17 @@ public class ListCategory : ListTitle
 
 public class ListContent : ListTitle
 {
-    public ListContent(int i, string t)
-        : base(i, t) { }
+    public bool flag1;
+    public Func<string> toString;
+
+    public ListContent(int i, string t, Func<string> toString)
+        : base(i, t)
+    {
+        this.toString = toString;
+    }
+
+    public override string ToString()
+    {
+        return toString != null ? toString() : text;
+    }
 }

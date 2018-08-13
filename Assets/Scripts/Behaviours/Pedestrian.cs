@@ -3,6 +3,7 @@ using SanAndreasUnity.Importing.Conversion;
 using SanAndreasUnity.Importing.Items;
 using SanAndreasUnity.Importing.Items.Definitions;
 using SanAndreasUnity.Importing.Animation;
+using SanAndreasUnity.Generated;
 using UnityEngine;
 
 namespace SanAndreasUnity.Behaviours

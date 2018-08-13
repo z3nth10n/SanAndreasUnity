@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using SanAndreasUnity.Generated;
 
 namespace SanAndreasUnity.Importing.Animation
 {
