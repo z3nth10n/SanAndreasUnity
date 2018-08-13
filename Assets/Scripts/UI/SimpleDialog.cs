@@ -14,7 +14,7 @@ public class SimpleDialog : MonoBehaviour
 
     public static void MessageBox(string title, string msg, Action action)
     {
-        GameObject go = new GameObject("HFTDialog");
+        GameObject go = new GameObject("SimpleDialog");
         SimpleDialog dlg = go.AddComponent<SimpleDialog>();
         dlg.Init(title, msg, action);
     }

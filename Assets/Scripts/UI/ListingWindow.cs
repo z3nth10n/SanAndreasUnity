@@ -50,7 +50,7 @@ public class ListingWindow
     {
         Event e = Event.current;
 
-        float height = captionHeight * titles.Count + 30;
+        float height = captionHeight * (curTitle == null ? titles.Count : curTitle.categories.Count + curTitle.contents.Count + captionHeight) + 30;
         Vector2 vector = GUI.BeginScrollView(rect, curTitle == null ? scroll : curTitle.scroll, new Rect(0, 0, rect.width, height));
 
         if (curTitle == null)
@@ -205,6 +205,9 @@ public class ListTitle
     {
         index = i;
         text = t;
+
+        categories = new List<ListCategory>();
+        contents = new List<ListContent>();
     }
 }
 
