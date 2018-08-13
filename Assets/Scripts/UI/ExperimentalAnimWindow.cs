@@ -20,7 +20,19 @@ namespace SanAndreasUnity.UI
         private void Start()
         {
             windowSize = new Vector2(490, 375);
-            listingWindow = new ListingWindow(new Rect(Vector2.zero, windowSize), "Animations") { titles = AnimationList.CurAnims.Keys.Select((x, i) => new ListTitle(i, x.ToString())).ToList() };
+            listingWindow = new ListingWindow(new Rect(Vector2.zero, windowSize), "Animations", (c) => 
+                {
+                    Debug.LogFormat("Playing '{0}' anim", c.text);
+
+                    Player.Instance.PlayerModel.ResetModelState();
+                    Player.Instance.PlayerModel.PlayAnim(AnimationList.GetGroupFromName(c.text), c.text);
+                })
+            { titles = AnimationList.CurAnims.Keys.Select(
+                (x, i) => new ListTitle(i, x.ToString())
+                {
+                    contents = AnimationList.CurAnims.Values.ElementAt(i).Select((y, j) => new ListContent(j, y)).ToList()
+                }).ToList()
+            };
 
             this.RegisterButtonInPauseMenu();
 

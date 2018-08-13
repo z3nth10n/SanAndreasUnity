@@ -1,4 +1,5 @@
 ﻿using SanAndreasUnity.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,16 +11,19 @@ public class ListingWindow
     public Rect rect;
 
     private Vector2 scroll = Vector2.zero;
-    private ListTitle curTitle, selectedTitle;
+    private ListTitle curTitle, selectedTitle, lastSelectedTitle;
     private Texture2D whitePixel, focusTexture;
 
     private float captionHeight = 0;
-    private bool isInit, isCaptionHeightGet;
+    private bool isInit, isCaptionHeightGet, m_backSelected;
 
-    public ListingWindow(Rect rect, string title)
+    private Action<ListContent> contentCallback;
+
+    public ListingWindow(Rect rect, string title, Action<ListContent> cc)
     {
         this.rect = rect;
         this.title = title;
+        contentCallback = cc;
 
         whitePixel = Color.white.ToTexture();
         focusTexture = new Color32(155, 210, 255, 255).ToTexture();
@@ -79,10 +83,10 @@ public class ListingWindow
 
     private void Display(ListTitle onlyTile, Event e)
     {
-        if (onlyTile.contents != null) // Display any content without category
+        if (onlyTile.contents != null && onlyTile.contents.Count > 0) // Display any content without category
             Display(onlyTile.contents, e, ListingType.Content);
 
-        if(onlyTile.categories != null) // Display any category and its content
+        if(onlyTile.categories != null && onlyTile.contents.Count > 0) // Display any category and its content
             Display(onlyTile.categories, e, ListingType.Category);
     }
 
@@ -95,31 +99,36 @@ public class ListingWindow
 
         if (!isTitle)
         {
-            if (GUILayout.Button("..", style))
+            Rect rr = new Rect(0, 0, rect.width, captionHeight - 6);
+
+            if (m_backSelected)
             {
+                GUI.DrawTexture(rr, focusTexture);
                 style.normal = new GUIStyleState() { textColor = Color.black };
-                selectedTitle = null;
             }
 
-            if (selectedTitle != null && style.normal.textColor == Color.black)
-                style.normal = new GUIStyleState() { textColor = Color.white };
+            if (IsHovering(rr, e) && e.type == EventType.MouseDown && e.clickCount == 2)
+                curTitle = null;
+
+            if (GUILayout.Button("...", style))
+            {
+                selectedTitle = null;
+                m_backSelected = true;
+            }
+
+            style.normal = new GUIStyleState() { textColor = Color.white };
 
             r = GUILayoutUtility.GetLastRect();
         }
 
         curRect = new Rect(r.x, r.y, rect.width, 20);
-        bool hover = IsHovering(curRect, e);
-
-        if (!isTitle && hover && Event.current.type == EventType.MouseUp && Event.current.clickCount == 2)
-            curTitle = null;
 
         foreach (ListTitle title in poly_contents)
-        { // new Rect(5, 10 + (i + 1) * captionHeight, rect.width - 10, captionHeight)
+        {
             bool isSelected = title == selectedTitle,
                  isFirst = titles.First() == title;
 
             curRect.y = r.y + (isFirst ? 0 : captionHeight);
-            hover = IsHovering(curRect, e); // Update current hover bool
 
             style.normal = new GUIStyleState() { textColor = isSelected ? Color.black : Color.white };
 
@@ -128,9 +137,13 @@ public class ListingWindow
 
             // (isTitle && !isCategory ? " + " : (!isTitle && isCategory ? "" : "     " ))
 
-            if (hover && e.type == EventType.MouseDown && e.clickCount == 2)
+            if (IsHovering(curRect, e) && e.type == EventType.MouseDown && e.clickCount == 2)
             {
-                curTitle = title;
+                if (type == ListingType.Title)
+                    curTitle = title;
+                else
+                    contentCallback((ListContent)title);
+
                 Debug.LogFormat("Selected title {0}", curTitle.text);
             }
 
@@ -148,13 +161,14 @@ public class ListingWindow
                 switch(type)
                 {
                     case ListingType.Content:
-                        if (GUILayout.Button((resursive ? new string(' ', 5) : " - ") + title.text, style))
+                        if (GUILayout.Button((resursive ? new string(' ', 5) : "") + title.text, style))
                             selectedTitle = title;
                         break;
 
                     case ListingType.Category:
                         if (GUILayout.Button(title.text, style))
                             selectedTitle = title;
+
                         Display(category.contents, e, ListingType.Content, true);
                         break;
                 }
@@ -162,6 +176,11 @@ public class ListingWindow
 
             r = GUILayoutUtility.GetLastRect();
         }
+
+        if (selectedTitle != lastSelectedTitle && selectedTitle != null)
+            m_backSelected = false;
+
+        lastSelectedTitle = selectedTitle;
     }
 
     private bool IsHovering(Rect curRect, Event e)

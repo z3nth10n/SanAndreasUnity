@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 public enum AnimationGroups
 {
@@ -278,6 +279,11 @@ public class AnimationList
     public static string GetAnimGroupName(AnimationGroups group)
     {
         return animGroups[(int)group];
+    }
+
+    public static AnimationGroups GetGroupFromName(string animName)
+    {
+        return animList.FirstOrDefault(x => x.Value.Any(y => y == animName)).Key;
     }
 
     public static Dictionary<AnimationGroups, List<string>> CurAnims { get { return animList; } }
