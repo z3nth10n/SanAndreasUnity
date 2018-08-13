@@ -64,12 +64,12 @@ public class ListingWindow
 
         if (curTitle == null)
         {
-            Display(titles, e, true);
+            Display(titles, e, ListingType.Title);
         }
         else
         {
             if (curTitle.contents != null)
-                Display(curTitle.contents.Cast<ListTitle>(), e, false);
+                Display(curTitle, e);
         }
 
         GUILayout.EndArea();
@@ -77,8 +77,19 @@ public class ListingWindow
         GUI.EndScrollView();
     }
 
-    private void Display(IEnumerable<ListTitle> poly_contents, Event e, bool isTitle)
+    private void Display(ListTitle onlyTile, Event e)
     {
+        if (onlyTile.contents != null) // Display any content without category
+            Display(onlyTile.contents, e, ListingType.Content);
+
+        if(onlyTile.categories != null) // Display any category and its content
+            Display(onlyTile.categories, e, ListingType.Category);
+    }
+
+    private void Display(IEnumerable<ListTitle> poly_contents, Event e, ListingType type, bool resursive = false)
+    {
+        bool isTitle = type == ListingType.Title;
+
         GUIStyle style = new GUIStyle("label");
         Rect r = Rect.zero, curRect = Rect.zero;
 
@@ -115,23 +126,38 @@ public class ListingWindow
             if (isSelected)
                 GUI.DrawTexture(curRect, focusTexture);
 
-            bool isCategory = title is ListCategory;
-
             // (isTitle && !isCategory ? " + " : (!isTitle && isCategory ? "" : "     " ))
+
+            if (hover && e.type == EventType.MouseDown && e.clickCount == 2)
+            {
+                curTitle = title;
+                Debug.LogFormat("Selected title {0}", curTitle.text);
+            }
 
             if (isTitle)
             {
                 if (GUILayout.Button(" + " + title.text, style))
                     selectedTitle = title;
             }
-
-            //if (isSelected)
-            //    Debug.Log(hover);
-
-            if (hover && Event.current.type == EventType.MouseUp && Event.current.clickCount == 2)
+            else
             {
-                curTitle = title;
-                Debug.LogFormat("Selected title {0}", curTitle.text);
+                // Display only first level of titles (without recursivity)
+                ListCategory category = type == ListingType.Category ? (ListCategory)title : null;
+                ListContent content = type == ListingType.Content ? (ListContent)title : null;
+
+                switch(type)
+                {
+                    case ListingType.Content:
+                        if (GUILayout.Button((resursive ? new string(' ', 5) : " - ") + title.text, style))
+                            selectedTitle = title;
+                        break;
+
+                    case ListingType.Category:
+                        if (GUILayout.Button(title.text, style))
+                            selectedTitle = title;
+                        Display(category.contents, e, ListingType.Content, true);
+                        break;
+                }
             }
 
             r = GUILayoutUtility.GetLastRect();
@@ -143,6 +169,8 @@ public class ListingWindow
         return curRect.Contains(e.mousePosition);
     }
 }
+
+public enum ListingType { Title, Category, Content }
 
 public class ListTitle
 {
