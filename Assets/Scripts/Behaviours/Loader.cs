@@ -32,9 +32,6 @@ namespace SanAndreasUnity.Behaviours
         private static string[] archivePaths;
         private static IArchive[] archives;
 
-        private static FileBrowser m_fileBrowser;
-        private static bool m_selectedPath;
-
 		public class LoadingStep
 		{
 			public IEnumerator Coroutine { get; private set; }
@@ -83,6 +80,7 @@ namespace SanAndreasUnity.Behaviours
 		{
 			
 			LoadingStep[] steps = new LoadingStep[] {
+				new LoadingStep ( StepSelectGTAPath(), "Select path to GTA", 0.0f ),
 				new LoadingStep ( StepGetPaths, "Loading archive paths", 0.03f ),
 				new LoadingStep ( StepLoadArchives, "Loading archives", 1.7f ),
 				new LoadingStep ( StepLoadSplashScreen, "Loading splash screen", 0.06f ),
@@ -130,14 +128,6 @@ namespace SanAndreasUnity.Behaviours
 			var stopwatch = System.Diagnostics.Stopwatch.StartNew ();
 
 			Debug.Log("Started loading GTA");
-
-            if (string.IsNullOrEmpty(ArchiveManager.GameDir))
-            {
-                m_fileBrowser = new FileBrowser(new Rect(5, 5, 600, 500), "Select GTA Path", FileSelectedCallback) { BrowserType = FileBrowserType.Directory };
-                m_fileBrowser.Toggle();
-
-                yield return new WaitUntil(() => m_selectedPath);
-            }
 
 			// wait a few frames - to "unblock" the program, and to let other scripts initialize before
 			// registering their loading steps
@@ -222,6 +212,24 @@ namespace SanAndreasUnity.Behaviours
 			Debug.LogException (ex);
 		}
 
+
+		private static IEnumerator StepSelectGTAPath ()
+		{
+			yield return null;
+
+			string path = Config.GetPath(Config.const_game_dir);
+
+			if (string.IsNullOrEmpty (path)) {
+				// path is not set
+				// show file browser to user to select path
+				m_showFileBrowser = true;
+			} else {
+				yield break;
+			}
+
+			// wait until user selects a path
+			yield return new WaitUntil(() => m_selectedPath);
+		}
 
 		private static void StepGetPaths ()
 		{
@@ -467,13 +475,36 @@ namespace SanAndreasUnity.Behaviours
 
 		}
 
+		private static void DisplayFileBrowser ()
+		{
+			if (!m_showFileBrowser)
+				return;
+
+			if (m_fileBrowser == null) {
+				Rect rect = GUIUtils.GetCenteredRect (new Vector2 (550, 350));
+
+				m_fileBrowser = new FileBrowser(rect, "Select path to GTA", FileSelectedCallback);
+				m_fileBrowser.BrowserType = FileBrowserType.Directory;
+				m_fileBrowser.Toggle();			
+			}
+
+			m_fileBrowser.OnGUI ();
+
+		}
+
         private static void FileSelectedCallback(string path)
         {
+	    // path was not set
+	    if (string.IsNullOrEmpty (path)) throw new System.Exception ("Path to GTA was not set");
+			
+
             DevProfiles.AddNewPath(path);
             DevProfiles.SaveChanges();
 
             // Load this time with this path
             ArchiveManager.GameDir = path;
+
+	    m_fileBrowser.Toggle();
 
             m_selectedPath = true;
         }

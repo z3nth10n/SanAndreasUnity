@@ -3,9 +3,7 @@ using SanAndreasUnity.Importing.Conversion;
 using SanAndreasUnity.Utilities;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -679,10 +677,13 @@ namespace SanAndreasUnity.Behaviours
                 GUILayout.BeginArea(new Rect(mapScroll, mapRect * curZoom));
 
                 GUI.DrawTexture(new Rect(mapZoomPos, mapRect * curZoom), mapTexture);
+                //if (Event.current.type.Equals(EventType.Repaint))
+                //GUI.DrawTexture(new Rect(10, 10, 100, 100), mapTexture);
 
                 GUI.DrawTexture(new Rect(Vector2.zero, Vector2.one * 16), blackPixel);
 
                 // WIP: I have to load move cursor
+                // WIP: I have to load map bars
                 // WIP: I have to load marker
                 // WIP: Dont draw undescovered zones
                 // + drag & drop + scroll w/ mouse

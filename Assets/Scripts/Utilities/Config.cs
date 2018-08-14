@@ -12,9 +12,8 @@ namespace SanAndreasUnity.Utilities
 {
     public static class Config
     {
-        public const string const_game_dir = "game_dir",
-                            const_dev_profiles = "dev_profiles",
-                            const_active_dev_profile = "active_dev_profile";
+        public const string const_game_dir = "game_dir";
+
 
         public static string FileName
         {
@@ -53,16 +52,23 @@ namespace SanAndreasUnity.Utilities
 
         private static readonly Dictionary<string, string> _substitutions;
 
+
         static Config()
         {
+	    _root = new JObject ();
+	    _user = new JObject ();
+
             if (!File.Exists(UserFilePath) || File.Exists(UserFilePath) && string.IsNullOrEmpty(File.ReadAllText(UserFilePath)))
                 File.WriteAllText(UserFilePath, "{\r\n    // Specify overrides here\r\n}\r\n");
+            }
 
             _substitutions = new Dictionary<string, string>();
 
             _root = JObject.Parse(File.ReadAllText(FilePath));
             _user = JObject.Parse(File.ReadAllText(UserFilePath));
+
         }
+
 
         private static TVal ConvertVal<TVal>(JToken val)
         {
@@ -134,5 +140,16 @@ namespace SanAndreasUnity.Utilities
                 .Select(x => ReplaceSubstitutions((string)x))
                 .ToArray();
         }
+
+	public static void SetString (string key, string value)
+	{
+		_user [key] = value;
+	}
+
+	public static void SaveUserConfig ()
+	{
+		File.WriteAllText (UserFilePath, _user.ToString (Newtonsoft.Json.Formatting.Indented));
+	}
+
     }
 }
