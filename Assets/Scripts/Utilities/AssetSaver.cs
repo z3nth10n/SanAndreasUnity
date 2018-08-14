@@ -1,8 +1,6 @@
-﻿#if UNITY_EDITOR
-
-using UnityEngine;
-using UnityEditor;
+﻿using UnityEngine;
 using System.IO;
+using SanAndreasUnity.Utilities;
 
 public class AssetSaver
 {
@@ -19,8 +17,6 @@ public class AssetSaver
     public static void SaveMesh(Mesh mesh)
     {
         string name = string.IsNullOrEmpty(mesh.name) ? Random.Range(0, short.MaxValue).ToString() : mesh.name;
-        AssetDatabase.CreateAsset(mesh, Path.Combine(SavePath, name + ".asset"));
+        File.WriteAllBytes(Path.Combine(SavePath, name + ".asset"), MeshSerializer.SerializeMesh(mesh));
     }
 }
-
-#endif
